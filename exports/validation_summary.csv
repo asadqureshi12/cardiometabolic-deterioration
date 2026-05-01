@@ -1,0 +1,3 @@
+group_label,n,events,event_rate_pct,lift_ratio,display_order
+WORSENING + UNSTABLE,7,0,0.0,0.0,1
+All other patients,624,48,7.7,,2

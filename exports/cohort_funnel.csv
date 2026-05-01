@@ -1,0 +1,5 @@
+stage_order,stage,n
+1,Source Patients,1113
+2,Cardiometabolic Cohort,631
+3,Scored,479
+4,Temporally Evaluable,118

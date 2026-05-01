@@ -1,0 +1,252 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f8f9fa;
+    color: #1a1a2e;
+    line-height: 1.6;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 30px 0 20px;
+    border-bottom: 2px solid #2E86C1;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 1.6rem;
+    color: #1A5276;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: #5d6d7e;
+}
+
+#search-section {
+    margin-bottom: 30px;
+}
+
+#search-section label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+#patient-search {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 2px solid #d5d8dc;
+    border-radius: 6px;
+    outline: none;
+}
+
+#patient-search:focus {
+    border-color: #2E86C1;
+}
+
+#suggestions {
+    border: 1px solid #d5d8dc;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+}
+
+#suggestions div {
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#suggestions div:hover {
+    background: #eaf2f8;
+}
+
+#cohort-summary {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #5d6d7e;
+}
+
+#alert-banner {
+    background: #C0392B;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+#summary-panel, #string-panel, #marker-panel, #chart-panel {
+    background: #fff;
+    border: 1px solid #d5d8dc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 1.1rem;
+    color: #1A5276;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eaecee;
+}
+
+/* Summary grid — 5 columns: ID, Band, CVD, Trajectory, Variance */
+#summary-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 12px;
+    align-items: center;
+}
+
+.summary-item {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.summary-item .label {
+    font-size: 0.7rem;
+    color: #5d6d7e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.summary-item .value {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+/* Band badge — large, vivid, sufficiency-coloured */
+.band-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+}
+.band-suff-DATA_SUFFICIENT { background: #27AE60; }
+.band-suff-PARTIALLY_SUFFICIENT { background: #B7950B; }
+.band-suff-DATA_INSUFFICIENT { background: #808B96; }
+
+/* Trajectory / variance text colours */
+.traj-WORSENING { color: #C0392B; font-weight: 700; }
+.traj-STABLE { color: #5d6d7e; }
+.traj-IMPROVING { color: #1E8449; font-weight: 700; }
+.traj-UNSTABLE { color: #C0392B; font-weight: 700; }
+.traj-DATA_INSUFFICIENT { color: #95A5A6; font-style: italic; }
+
+/* String display */
+#string-display {
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    background: #1a1a2e;
+    color: #48C9B0;
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    word-break: break-all;
+}
+
+#string-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px;
+}
+
+.string-field {
+    background: #f8f9fa;
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+}
+
+.string-field .field-name {
+    font-size: 0.65rem;
+    color: #5d6d7e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.string-field .field-value {
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* Marker table */
+#marker-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+#marker-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: #f8f9fa;
+    border-bottom: 2px solid #d5d8dc;
+    font-size: 0.8rem;
+    color: #5d6d7e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#marker-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eaecee;
+}
+
+#chart-panel canvas {
+    max-height: 350px;
+}
+
+#chart-note {
+    font-size: 0.85rem;
+    color: #95A5A6;
+    font-style: italic;
+}
+
+footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #d5d8dc;
+    font-size: 0.75rem;
+    color: #95A5A6;
+    text-align: center;
+}
+.chart-subtitle {
+    font-size: 0.8rem;
+    color: #95A5A6;
+    margin-bottom: 12px;
+}
+.string-legend {
+    font-size: 0.7rem;
+    color: #7f8c8d;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}

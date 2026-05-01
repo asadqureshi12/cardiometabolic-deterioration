@@ -1,0 +1,9 @@
+comparison,marker,n
+Raw Worst Marker,BMI,353
+Raw Worst Marker,LDL Cholesterol,117
+Raw Worst Marker,Systolic BP,3
+After Floor Rule,BMI,110
+After Floor Rule,HbA1c,5
+After Floor Rule,LDL Cholesterol,149
+After Floor Rule,Systolic BP,193
+After Floor Rule,eGFR,22

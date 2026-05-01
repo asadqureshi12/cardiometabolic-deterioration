@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P3 — Cardiometabolic Deterioration Monitoring System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>P3 — Cardiometabolic Deterioration Monitoring System</h1>
+        <p class="subtitle">Synthetic Cohort (n=479) · Rule-based scoring · NICE/KDIGO thresholds · Decision support only</p>
+    </header>
+
+    <section id="search-section">
+        <label for="patient-search">Search Patient ID</label>
+        <input type="text" id="patient-search" placeholder="Type patient ID..." autocomplete="off">
+        <div id="suggestions"></div>
+        <p id="cohort-summary"></p>
+    </section>
+
+    <section id="patient-detail" class="hidden">
+
+        <div id="summary-panel">
+            <h2>Patient Summary</h2>
+            <div id="summary-grid"></div>
+        </div>
+
+        <div id="string-panel">
+            <h2>Clinical Priority String</h2>
+            <div id="string-display"></div>
+            <div id="string-fields"></div>
+        </div>
+
+        <div id="marker-panel">
+            <h2>Marker Scores</h2>
+            <p class="chart-subtitle">BMI and eGFR trajectory/variance do not contribute to system-level signals (D-76, D-79). Variance threshold: 0.001 (D-62) — above = UNSTABLE, at or below = STABLE.</p>
+            <table id="marker-table">
+                <thead>
+                    <tr>
+                        <th>Marker</th>
+                        <th>Mean Exceedance</th>
+                        <th>Data Tier</th>
+                        <th>Trajectory</th>
+                        <th>Variance</th>
+                    </tr>
+                </thead>
+                <tbody id="marker-tbody"></tbody>
+            </table>
+        </div>
+
+        <div id="chart-panel">
+            <h2>Monthly Exceedance</h2>
+            <p class="chart-subtitle">SBP, HbA1c, LDL only — BMI and eGFR use separate scoring models</p>
+            <p id="chart-note" class="hidden"></p>
+            <canvas id="monthly-chart"></canvas>
+        </div>
+
+    </section>
+
+    <footer>
+        <p>Synthetic data only — Synthea 1,113-patient cohort. Not for clinical use. All values precomputed in SQL pipeline. This explorer renders outputs only — no client-side calculation.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
