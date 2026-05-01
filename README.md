@@ -1,3 +1,6 @@
+## TL;DR
+
+SQL-first clinical scoring pipeline built on 1,113 synthetic cardiometabolic patients. Assigns deterioration bands 1–4 using NICE-grounded biomarker exceedance, BMI floor rule, and temporal trajectory/variance signals. 631 patients cohorted, 479 scored, 7 flagged WORSENING+UNSTABLE. Validated with 29 unit tests, golden set drift detection, and retrospective holdout. Full FHIR R4 export (39,070 resources, 3 bundles) validated against HL7 validator. Visualised in Tableau Public. Interactive patient explorer on GitHub Pages.
 ---
 
 ## 1. Clinical Context
