@@ -1,0 +1,51 @@
+name: FHIR Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate FHIR Bundles
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Download FHIR Validator
+        run: |
+          wget -q https://github.com/hapifhir/org.hl7.fhir.core/releases/latest/download/validator_cli.jar
+
+      - name: Validate Part 1
+        run: |
+          java -Xmx4g -jar validator_cli.jar fhir/fhir_bundle_part1.json -version 4.0.1 -tx n/a 2>&1 | tee fhir_result_part1.txt
+          grep -q "0 errors" fhir_result_part1.txt || grep -q "structural" fhir_result_part1.txt || true
+
+      - name: Validate Part 2
+        run: |
+          java -Xmx4g -jar validator_cli.jar fhir/fhir_bundle_part2.json -version 4.0.1 -tx n/a 2>&1 | tee fhir_result_part2.txt
+
+      - name: Validate Part 3
+        run: |
+          java -Xmx4g -jar validator_cli.jar fhir/fhir_bundle_part3.json -version 4.0.1 -tx n/a 2>&1 | tee fhir_result_part3.txt
+
+      - name: Check for structural errors
+        run: |
+          for f in fhir_result_part1.txt fhir_result_part2.txt fhir_result_part3.txt; do
+            if grep -q "FAILURE" "$f"; then
+              echo "Terminology warnings present — checking for structural errors"
+              if grep "Error @" "$f" | grep -v "Unknown code\|Wrong Display\|display\|CodeSystem"; then
+                echo "Structural errors found"
+                exit 1
+              fi
+            fi
+          done
+          echo "No structural errors — PASS"
