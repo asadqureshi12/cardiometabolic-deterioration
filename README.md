@@ -349,7 +349,7 @@ A Data Protection Impact Assessment (DPIA) would be required before any real dep
 
 An interactive HTML patient explorer is available at:
 
-**[GitHub Pages — Patient Explorer](https://YOUR_USERNAME.github.io/p3-cardiometabolic-deterioration/explorer/)**
+**[GitHub Pages — Patient Explorer](https://asadqureshi12.github.io/cardiometabolic-deterioration/explorer/)**
 
 Features:
 - Search by patient ID with autocomplete
