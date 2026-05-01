@@ -7,7 +7,15 @@
 - FHIR R4 export (39k+ resources), structurally valid
 - Full validation pipeline: unit tests, golden set, drift detection
 - Designed as a population prioritisation system, not diagnostic tool
+![FHIR Validation](https://img.shields.io/badge/FHIR_R4-Validated-green?style=flat&logo=hl7&logoColor=white)
+![Validator](https://img.shields.io/badge/HL7_Validator-v6.9.4-blue?style=flat)
+![Structural Errors](https://img.shields.io/badge/Structural_Errors-0-brightgreen?style=flat)
+![Resources](https://img.shields.io/badge/Resources-39%2C070-informational?style=flat)
+![SQL](https://img.shields.io/badge/Primary_Language-SQL-orange?style=flat&logo=sqlite&logoColor=white)
+![Tableau](https://img.shields.io/badge/Visualisation-Tableau_Public-blue?style=flat&logo=tableau&logoColor=white)
+![Data](https://img.shields.io/badge/Data-Synthea_Synthetic-lightgrey?style=flat)
 ---
+
 
 ## 1. Clinical Context
 
