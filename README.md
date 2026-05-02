@@ -346,7 +346,7 @@ A Data Protection Impact Assessment would be required under UK GDPR Article 35 b
 
 Interactive patient drill-down — search by ID, view band, trajectory, variance, marker scores.
 
-**[Launch Patient Explorer](https://asadqurashi12.github.io/cardiometabolic-deterioration/explorer/)**
+**[Launch Patient Explorer](https://asadqureshi12.github.io/cardiometabolic-deterioration/explorer/)**
 
 Features:
 - Search by patient ID with autocomplete
