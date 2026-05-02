@@ -341,13 +341,8 @@ A Data Protection Impact Assessment would be required under UK GDPR Article 35 b
 
 ---
 
-## 16. Disclaimer
 
-Synthea-generated synthetic EHR data only. No real NHS patient data used or accessed. All identifiers are synthetic UUIDs. Not validated for clinical use. Not assessed under DCB0129. Must not be used for clinical decisions about real patients.
-
----
-
-## 17. Patient Explorer
+## 16. Patient Explorer
 
 Interactive patient drill-down — search by ID, view band, trajectory, variance, marker scores.
 
@@ -361,6 +356,15 @@ Features:
 - Marker scores table
 - Monthly exceedance chart (SBP, HbA1c, LDL)
 - WORSENING+UNSTABLE alert banner
+
+---
+
+
+## 17. Disclaimer
+
+Synthea-generated synthetic EHR data only. No real NHS patient data used or accessed. All identifiers are synthetic UUIDs. Not validated for clinical use. Not assessed under DCB0129. Must not be used for clinical decisions about real patients.
+
+---
 
 *Pipeline: BANDS_V6 / PS_V4 / TEMPORAL_V3 — NO_DRIFT confirmed*
 *FHIR: HL7 Validator v6.9.4, R4.0.1*
