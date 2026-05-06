@@ -201,6 +201,18 @@ flowchart TD
 
 ---
 
+| Marker | Guideline | Tier 0 | Tier 1 | Tier 2 | Tier 3 |
+|--------|-----------|--------|--------|--------|--------|
+| Systolic BP | NICE NG136 | <140 mmHg | 140–159 | 160–179 | ≥180 |
+| HbA1c | NICE NG28 | <7.0% | 7.0–8.4% | 8.5–9.9% | ≥10.0% |
+| LDL (CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
+| LDL (no CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
+| eGFR | KDIGO 2012 | ≥60 | 45–59 | 30–44 | <30 |
+| BMI | NICE CG189 | <25 — no floor | 25–29.9 — no floor | 30–34.9 — Band 2 floor | ≥35 — Band 3 floor |
+| **Band** | | **1** | **2** | **3** | **4** |
+
+---
+
 ## 9. Priority String
 
 ```mermaid
