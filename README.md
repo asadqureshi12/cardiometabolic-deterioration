@@ -381,9 +381,9 @@ Features:
   <img src="screenshots/Dashboard2.png" width="1200">
 </p>
 
-![Dashboard 1 — Cohort & Scoring](screenshots/dashboard1.png)
+![Dashboard 1 — Cohort & Scoring](screenshots/Dashboard1.png)
 
-![Dashboard 2 — Risk Stratification](screenshots/dashboard2.png)
+![Dashboard 2 — Risk Stratification](screenshots/Dashboard2.png)
 ---
 
 ## 18. Disclaimer
