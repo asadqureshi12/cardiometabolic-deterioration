@@ -371,8 +371,19 @@ Features:
 
 ---
 
+## 17. Tableau
 
-## 17. Disclaimer
+<p align="center">
+  <img src="screenshots/dashboard1_cohort_scoring.png" width="900">
+</p>
+
+<p align="center">
+  <img src="screenshots/dashboard2_risk_stratification.png" width="900">
+</p>
+
+---
+
+## 18. Disclaimer
 
 Synthea-generated synthetic EHR data only. No real NHS patient data used or accessed. All identifiers are synthetic UUIDs. Not validated for clinical use. Not assessed under DCB0129. Must not be used for clinical decisions about real patients.
 
