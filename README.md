@@ -28,30 +28,6 @@ Cardiometabolic disease — encompassing Type 2 diabetes, cardiovascular disease
 
 ## 2. Cohort Pipeline
 
-```mermaid
-flowchart TD
-    A["Source Population\n1,113 Synthea patients\nSynthetic EHR"]
-    B["Cardiometabolic Cohort\n631 patients\nQualifying cardiometabolic condition\nCKD retained only with T2DM or HTN"]
-    C["Scored Patients\n479 patients\nNICE threshold exceedance\nBands 1-4 assigned"]
-    D["Temporally Evaluable\n118 patients\nTrajectory and variance\ncalculated — 1yr window"]
-    E["Highest Priority\n7 patients\nWORSENING + UNSTABLE\nBoth signals active"]
-
-    A -->|"482 excluded\nNo qualifying condition"| B
-    B -->|"152 excluded\nInsufficient observations"| C
-    C -->|"361 DATA_INSUFFICIENT\nSynthea observation sparsity"| D
-    D -->|"111 — one signal only\nnot both simultaneously"| E
-
-    style A fill:#f0f0f0,stroke:#999,color:#000000
-    style B fill:#dce8f5,stroke:#4a90d9,color:#000000
-    style C fill:#d5e8d4,stroke:#5a9e6f,color:#000000
-    style D fill:#fff2cc,stroke:#d6a500,color:#000000
-    style E fill:#f8cecc,stroke:#b85450,color:#000000
-```
-
----
-
-## 2a. Pipeline
-
 <p align="center">
   <img src="screenshots/excalidraw-2026-05-07-1511.png" style="max-width:100%;">
 </p>
@@ -70,7 +46,7 @@ flowchart TD
 ## 4. CVD Status Assignment
 
 <p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (4).png" style="max-width:100%;">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (3).png" style="max-width:100%;">
 </p>
 
 ---
