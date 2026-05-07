@@ -50,19 +50,18 @@ flowchart TD
 
 ---
 
-## 2a. Mermaid
+## 2a. Pipeline
 
 <p align="center">
   <img src="screenshots/excalidraw-2026-05-07-1511.png" style="max-width:100%;">
 </p>
 
-<p align="center">
-  <img src="screenshots/mermaid-diagram-2026-05-06-101122.png" style="max-width:100%;">
-</p>
+## 2b. Scoring Layers
 
 <p align="center">
-  <img src="screenshots/mermaid-diagram-2026-05-07-151344.png" style="max-width:100%;">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (1).png" style="max-width:100%;">
 </p>
+
 
 ---
 
