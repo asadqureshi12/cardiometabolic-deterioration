@@ -374,11 +374,11 @@ Features:
 ## 17. Tableau
 
 <p align="center">
-  <img src="screenshots/dashboard1_cohort_scoring.png" width="900">
+  <img src="screenshots/Dashboard1.png" width="900">
 </p>
 
 <p align="center">
-  <img src="screenshots/dashboard2_risk_stratification.png" width="900">
+  <img src="screenshots/Dashboard2.png" width="900">
 </p>
 
 ---
