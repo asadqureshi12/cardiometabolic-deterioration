@@ -56,13 +56,6 @@ flowchart TD
   <img src="screenshots/excalidraw-2026-05-07-1511.png" style="max-width:100%;">
 </p>
 
-## 2b. Scoring Layers
-
-<p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (1).png" style="max-width:100%;">
-</p>
-
-
 ---
 
 ## 3. Cohort Inclusion and Exclusion Logic
@@ -227,6 +220,14 @@ flowchart TD
 | **Band** | | **1** | **2** | **3** | **4** |
 
 ---
+
+## 8a. Scoring Layers
+
+<p align="center">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (1).png" style="max-width:100%;">
+</p>
+
+
 
 ## 9. Priority String
 
