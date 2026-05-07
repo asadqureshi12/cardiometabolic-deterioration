@@ -77,25 +77,26 @@ flowchart TD
 
 ---
 
-## 6. Scoring Pipeline — Four Layers
+## 6. Scoring Pipeline
 
-```mermaid
-flowchart TD
-    L1["Layer 1 — NICE Threshold Exceedance\nI = max(0, x-T / T) per marker per month\nSBP · HbA1c · LDL · eGFR\nNICE NG136 · NG28 · NG238 · NG203/KDIGO\nAcute inpatient SBP excluded\nNICE NG136 specifies resting BP — D-80"]
+| Marker | Guideline | Tier 0 | Tier 1 | Tier 2 | Tier 3 |
+|--------|-----------|--------|--------|--------|--------|
+| Systolic BP | NICE NG136 | <140 mmHg | 140–159 | 160–179 | ≥180 |
+| HbA1c | NICE NG28 | <7.0% | 7.0–8.4% | 8.5–9.9% | ≥10.0% |
+| LDL (CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
+| LDL (no CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
+| eGFR | KDIGO 2012 | ≥60 | 45–59 | 30–44 | <30 |
+| BMI | NICE CG189 | <25 — no floor | 25–29.9 — no floor | 30–34.9 — Band 2 floor | ≥35 — Band 3 floor |
+| **Band** | | **1** | **2** | **3** | **4** |
 
-    L2["Layer 2 — BMI Floor Rule\nNICE CG189 / D-79\nBMI excluded from exceedance argmax\nSets minimum band only\nClass I BMI 30-34.9 — floor Band 2\nClass II BMI 35-39.9 — floor Band 3\nClass III BMI 40+ — floor Band 3\nbase_band = MAX(dynamic, bmi_floor)"]
+---
 
-    L3["Layer 3 — Temporal Elevation\nNon-compensatory — D-51\nWORSENING marker — trajectory +1\nUNSTABLE marker — variance +1\nImprovement in one marker\ndoes not offset deterioration\nin another"]
+## 6a. Four Layers
 
-    L4["Layer 4 — Cap and CVD Floor\nfinal_band = MIN(interim, 4)\nRECENT CVD — floor Band 2\nMI/NSTEMI within 365 days\ncannot score below Band 2"]
+<p align="center">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (1).png" style="max-width:100%;">
+</p>
 
-    L1 --> L2 --> L3 --> L4
-
-    style L1 fill:#dce8f5,stroke:#4a90d9,color:#000000
-    style L2 fill:#fff2cc,stroke:#d6a500,color:#000000
-    style L3 fill:#ffe6cc,stroke:#d6820a,color:#000000
-    style L4 fill:#f8cecc,stroke:#b85450,color:#000000
-```
 
 ---
 
@@ -143,25 +144,6 @@ flowchart TD
 ```
 
 ---
-
-| Marker | Guideline | Tier 0 | Tier 1 | Tier 2 | Tier 3 |
-|--------|-----------|--------|--------|--------|--------|
-| Systolic BP | NICE NG136 | <140 mmHg | 140–159 | 160–179 | ≥180 |
-| HbA1c | NICE NG28 | <7.0% | 7.0–8.4% | 8.5–9.9% | ≥10.0% |
-| LDL (CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
-| LDL (no CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
-| eGFR | KDIGO 2012 | ≥60 | 45–59 | 30–44 | <30 |
-| BMI | NICE CG189 | <25 — no floor | 25–29.9 — no floor | 30–34.9 — Band 2 floor | ≥35 — Band 3 floor |
-| **Band** | | **1** | **2** | **3** | **4** |
-
----
-
-## 8a. Scoring Layers
-
-<p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (1).png" style="max-width:100%;">
-</p>
-
 
 
 ## 9. Priority String
