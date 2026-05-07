@@ -231,26 +231,10 @@ flowchart TD
 
 ## 9. Priority String
 
-```mermaid
-flowchart LR
-    S["ESTABLISHED | 3 | HbA1c:8.2/7.0 +17% | 4"]
+<p align="center">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (2).png" style="max-width:100%;">
+</p>
 
-    F1["Field 1\nCVD Status\nESTABLISHED\nRECENT / NONE"]
-    F2["Field 2\nBreach Count\nMarkers above\nNICE threshold"]
-    F3["Field 3\nWorst Marker\nName:value/threshold\n+deviation %"]
-    F4["Field 4\nCondition Count\nQOF qualifying\nconditions total"]
-
-    S --> F1
-    S --> F2
-    S --> F3
-    S --> F4
-
-    style S fill:#dce8f5,stroke:#4a90d9,color:#000000
-    style F1 fill:#f0f0f0,stroke:#999,color:#000000
-    style F2 fill:#f0f0f0,stroke:#999,color:#000000
-    style F3 fill:#f0f0f0,stroke:#999,color:#000000
-    style F4 fill:#f0f0f0,stroke:#999,color:#000000
-```
 
 ---
 
