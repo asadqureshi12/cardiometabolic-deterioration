@@ -50,6 +50,18 @@ flowchart TD
 
 ---
 
+## 2a. Mermaid
+
+<p align="center">
+  <img src="screenshots/mermaid-diagram-2026-05-06-101122.png" style="max-width:100%;">
+</p>
+
+<p align="center">
+  <img src="screenshots/mermaid-diagram-2026-05-07-151344.png" style="max-width:100%;">
+</p>
+
+---
+
 ## 3. Cohort Inclusion and Exclusion Logic
 
 ```mermaid
