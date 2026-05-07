@@ -53,6 +53,10 @@ flowchart TD
 ## 2a. Mermaid
 
 <p align="center">
+  <img src="screenshots/excalidraw-2026-05-07-1511.png" style="max-width:100%;">
+</p>
+
+<p align="center">
   <img src="screenshots/mermaid-diagram-2026-05-06-101122.png" style="max-width:100%;">
 </p>
 
