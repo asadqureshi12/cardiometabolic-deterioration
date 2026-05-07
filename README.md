@@ -91,28 +91,9 @@ flowchart TD
 
 ## 4. CVD Status Assignment
 
-```mermaid
-flowchart TD
-    P["Patient in cohort"]
-
-    Q1{"STEMI or NSTEMI\nwithin 365 days?\nSNOMED 401303003\nor 401314000"}
-
-    Q2{"Any CVD condition\nat any time?\nIHD, HF, AF, valve,\nMI/CABG history"}
-
-    RECENT["RECENT — n=4\nBand floor = 2\nLDL target 77.3 mg/dL\nNICE NG238 post-ACS"]
-    ESTABLISHED["ESTABLISHED — n=204\nLDL target 77.3 mg/dL\nNICE NG238"]
-    NONE["NONE — n=423\nLDL target 116.0 mg/dL\nNICE NG238"]
-
-    P --> Q1
-    Q1 -->|Yes| RECENT
-    Q1 -->|No| Q2
-    Q2 -->|Yes| ESTABLISHED
-    Q2 -->|No| NONE
-
-    style RECENT fill:#f8cecc,stroke:#b85450,color:#000000
-    style ESTABLISHED fill:#fff2cc,stroke:#d6a500,color:#000000
-    style NONE fill:#d5e8d4,stroke:#5a9e6f,color:#000000
-```
+<p align="center">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (3).png" style="max-width:100%;">
+</p>
 
 ---
 
