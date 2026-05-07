@@ -3,7 +3,7 @@
 - Built a rule-based cardiometabolic deterioration monitoring system (SQL + Python + FHIR)
 - 631-patient synthetic cohort (Synthea)
 - 4-layer scoring: threshold exceedance → BMI floor → temporal signals → clinical caps
-- Identifies high-risk patients via WORSENING + UNSTABLE trajectories
+- Flags patients with concurrent deterioration and instability trajectories
 - FHIR R4 export (39k+ resources), structurally valid
 - Full validation pipeline: unit tests, golden set, drift detection
 - Designed as a population prioritisation system, not diagnostic tool
