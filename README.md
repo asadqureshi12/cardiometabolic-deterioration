@@ -374,16 +374,13 @@ Features:
 ## 17. Tableau
 
 <p align="center">
-  <img src="screenshots/Dashboard1.png" width="1200">
+  <img src="screenshots/Dashboard1.png" style="max-width:100%;">
 </p>
 
 <p align="center">
-  <img src="screenshots/Dashboard2.png" width="1200">
+  <img src="screenshots/Dashboard2.png" style="max-width:100%;">
 </p>
 
-![Dashboard 1 — Cohort & Scoring](screenshots/Dashboard1.png)
-
-![Dashboard 2 — Risk Stratification](screenshots/Dashboard2.png)
 ---
 
 ## 18. Disclaimer
