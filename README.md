@@ -60,39 +60,17 @@ flowchart TD
 
 ## 3. Cohort Inclusion and Exclusion Logic
 
-```mermaid
-flowchart TD
-    START["All 1,113 Synthea patients"]
+<p align="center">
+  <img src="screenshots/excalidraw-2026-05-07-1511.png" style="max-width:100%;">
+</p>
 
-    Q1{"Qualifying condition\nfrom 46-code\ncardiometabolic set?\nclinical_active + is_active=1"}
-
-    Q2{"CKD present?"}
-
-    Q3{"T2DM or HTN\nalso present?"}
-
-    EXCLUDE1["Excluded\nNo qualifying condition"]
-    EXCLUDE2["Excluded — CKD only\nNo scoring target\nNo SBP/HbA1c/LDL pathway\nCPL-004"]
-    INCLUDE["Included\n631 patients\ncvd_status assigned\nRECENT / ESTABLISHED / NONE"]
-
-    START --> Q1
-    Q1 -->|No| EXCLUDE1
-    Q1 -->|Yes| Q2
-    Q2 -->|No| INCLUDE
-    Q2 -->|Yes| Q3
-    Q3 -->|No| EXCLUDE2
-    Q3 -->|Yes| INCLUDE
-
-    style EXCLUDE1 fill:#f8cecc,stroke:#b85450,color:#000000
-    style EXCLUDE2 fill:#f8cecc,stroke:#b85450,color:#000000
-    style INCLUDE fill:#d5e8d4,stroke:#5a9e6f,color:#000000
-```
 
 ---
 
 ## 4. CVD Status Assignment
 
 <p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (3).png" style="max-width:100%;">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (4).png" style="max-width:100%;">
 </p>
 
 ---
