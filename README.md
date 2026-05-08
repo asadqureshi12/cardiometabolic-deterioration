@@ -401,7 +401,9 @@ sprint2_log.md
 
 The pipeline is fully deterministic. Running the SQL files in execution order against the source Synthea CSVs will reproduce all outputs exactly.
 
-**Execution order:**load_data.py               — ingest Synthea CSVs into SQLite
+**Execution order:**
+
+load_data.py               — ingest Synthea CSVs into SQLite
 load_snomed_map.py         — load SNOMED→ICD-10 reference table
 clean_data.sql             — Sprint 1 data quality framework (67 rules)
 load_reference.sql         — reference tables: nice_thresholds, scoring_constants, condition_classification
@@ -409,6 +411,7 @@ prepare_cohort.sql         — cohort eligibility, CVD status assignment, patien
 score_patients.sql         — marker scoring, band assignment, temporal signals
 validate_outputs.sql       — unit tests, golden set comparison, drift detection
 fhir_export_final_v2.py    — FHIR R4 Bundle export (3 parts)
+
 **Locked pipeline versions:**
 
 | Component | Version |
