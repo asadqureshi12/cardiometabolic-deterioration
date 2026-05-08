@@ -37,14 +37,13 @@ Cardiometabolic disease — encompassing Type 2 diabetes, cardiovascular disease
 ## 3. Cohort Selection
 
 <p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (4).png" width="700">
-
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (4).png" style="max-width:100%;">
 ---
 
 
 ## 4. CVD Status Assignment
 
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (3).png" width="700">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (3).png" style="max-width:100%;">
 </p>
 
 
