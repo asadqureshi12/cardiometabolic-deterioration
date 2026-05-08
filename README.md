@@ -127,7 +127,13 @@ The separation of these two layers reflects the DCB0129 principle that clinical 
 
 ### Why Rule-Based Instead of ML?
 
-Interpretability, auditability, guideline traceability, and DCB0129 alignment were prioritised over predictive optimisation. A rule-based system produces outputs that can be fully explained to a clinician, fully traced to a published source, and fully audited in a clinical safety case. A probabilistic model optimised to a synthetic dataset would produce none of these properties and would require real-world validation before any NHS governance body would consider deployment. The design choice was deliberate.
+| Rule-Based Architecture | ML Architecture |
+|---|---|
+| Fully interpretable | Lower interpretability |
+| Guideline-traceable | Dataset-dependent |
+| Deterministic outputs | Probabilistic outputs |
+| Easier DCB0129 auditability | Requires extensive real-world validation |
+| Suitable for synthetic proof-of-concept | Requires real-world training data |
 
 ---
 
@@ -287,7 +293,7 @@ Four complementary validation and consistency analyses were applied. Given the W
 
 ---
 
-### V1 — Retrospective Acute Encounter Analysis
+### V1 — Retrospective Encounter Enrichment Analysis
 
 WORSENING+UNSTABLE patients were compared against all other temporal patients for acute or inpatient encounter rate in the 6 months following the observation window close date.
 
