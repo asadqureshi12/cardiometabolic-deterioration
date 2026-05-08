@@ -31,28 +31,16 @@ Cardiometabolic disease — encompassing Type 2 diabetes, cardiovascular disease
 <p align="center">
   <img src="screenshots/excalidraw-2026-05-07-1511.png" style="max-width:100%;">
 </p>
-<p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (3).png" width="400">
-  
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (4).png" width="400">
-</p>
----
-
-## 3. Cohort Inclusion and Exclusion Logic
-
-<p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (4).png" width="900">
-</p>
-</p>
-
 
 ---
 
-## 4. CVD Status Assignment
+## 3. Cohort Selection and CVD Status Assignment
 
 <p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (3).png" style="max-width:100%;">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (3).png" width="500">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (4).png" width="500">
 </p>
+
 
 ---
 
