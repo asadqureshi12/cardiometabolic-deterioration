@@ -56,7 +56,7 @@ All clinical thresholds and escalation criteria are derived from NICE, KDIGO, RC
 
 ---
 
-## 2. Cohort Pipeline
+## 2. System Architecture
 
 <p align="center">
   <img src="screenshots/Untitled-2026-05-07-1511.excalidraw.png" style="max-width:100%;">
