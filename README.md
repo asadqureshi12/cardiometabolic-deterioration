@@ -163,6 +163,35 @@ flowchart TD
     style RESULT fill:#f8cecc,stroke:#b85450,color:#000000
 ```
 
+### Temporal Modelling Rationale
+
+Temporal modelling was intentionally restricted to:
+
+- systolic blood pressure
+
+- HbA1c
+
+- LDL cholesterol
+
+BMI and eGFR were excluded from trajectory logic due to different physiological behaviour and interpretability constraints (D-76).
+
+Trajectory classification identifies directional change:
+
+- `WORSENING`
+
+- `IMPROVING`
+
+- `STABLE`
+
+Variance classification independently evaluates signal volatility:
+
+- `UNSTABLE`
+
+- `STABLE`
+
+The aggregation model is explicitly non-compensatory (D-51). Any deterioration signal activates the system-level flag even if other markers improve concurrently.
+
+This approach was selected to reflect conservative clinical escalation behaviour in chronic disease monitoring.
 ---
 
 
