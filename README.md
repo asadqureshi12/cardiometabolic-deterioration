@@ -27,12 +27,15 @@
 ## Key Findings
 | Metric | Value |
 |---|---|
+| Source patients | 1,113 |
 | Cohort patients | 631 |
+| Scored patients | 479 |
 | Temporal patients | 118 |
-| Highest-risk patients | 7 |
+| Highest-priority patients (WORSENING + UNSTABLE) | 7 |
 | FHIR resources | 39,070 |
 | Structural FHIR errors | 0 |
-| Unit tests | 29/29 PASS |
+| Unit tests | 29 / 29 PASS |
+| Drift status | NO_DRIFT_DETECTED |
 
 ---
 
