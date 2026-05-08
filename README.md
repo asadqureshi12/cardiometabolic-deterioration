@@ -136,7 +136,8 @@ Represents highest-risk temporal signal combination in the cohort.
 | LDL (CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
 | LDL (no CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
 | eGFR | KDIGO 2012 | ≥60 | 45–59 | 30–44 | <30 |
-| BMI | NICE CG189 | <25 — no floor | 25–29.9 — no floor | 30–34.9 — Band 2 floor | ≥35 — Band 3 floor |
+| BMI | NICE CG189 | <25 — no floor | 25–29.9 — overweight but no floor | 30–34.9 — Band 2 floor | ≥35 — Band 3 floor |
+---
 | **Band** | | **1** | **2** | **3** | **4** |
 | **Interpretation** | | **Stable** | **Emerging concern requiring monitoring** | **Significant deterioration requiring review** | **Highest-priority surveillance state** |
 
