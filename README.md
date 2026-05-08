@@ -100,16 +100,20 @@ The separation of these two layers reflects the DCB0129 principle that clinical 
 
 ## 7. Band Distribution
 
-| Band | n | Interpretation |
-|---|---|---|
-| 1 | 31 | Stable — no active exceedance |
-| 2 | 27 | Emerging concern — monitoring indicated |
-| 3 | 23 | Significant deterioration — clinical review |
-| 4 | 30 | Highest-priority surveillance state |
+Band assignment covers all 479 scored patients. Temporal signal computation is a separate downstream step applied to the 118 patients who met observation density criteria — it does not gate band assignment.
 
-Of the 30 Band 4 patients, 7 additionally carry a WORSENING+UNSTABLE temporal signal — the highest-risk designation in the system, requiring concurrent deterioration trajectory and instability across biomarker domains.
+| Band | n (all scored) | Interpretation |
+|---|---|---|
+| 1 | 166 | Stable — no active exceedance |
+| 2 | 179 | Emerging concern — monitoring indicated |
+| 3 | 56 | Significant deterioration — clinical review |
+| 4 | 78 | Highest-priority surveillance state |
+| **Total** | **479** | |
+
+Of the 78 Band 4 patients, 118 received temporal scoring. Of those 118, 7 carry a WORSENING+UNSTABLE temporal signal — meaning concurrent deterioration trajectory and instability confirmed across biomarker domains. These 7 patients represent the intersection of the highest band assignment and the highest temporal risk designation, arrived at through two independent scoring pathways that share no underlying logic.
 
 ---
+
 
 ## 8. Temporal Signal Logic
 
