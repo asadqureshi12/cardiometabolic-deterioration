@@ -243,30 +243,20 @@ v6.9.4
 0 structural errors
 ---
 
-## 12. FHIR R4 Export Architecture
+## 12. FHIR R4 Export
 
-```mermaid
-flowchart TD
-    DB["SQLite Database\n631 cohort patients\nAll scoring complete"]
+All 631 cohort patients were exported as FHIR R4 bundles using `fhir_export_final_v2.py`. No scoring logic sits in Python — the export script reads final scoring outputs from SQLite and maps them to FHIR resource types. All clinical reasoning is in SQL.
 
-    PY["fhir_export_final_v2.py\nPython — export only\nNo scoring logic in Python\nAll scoring in SQL"]
+The export produces 39,070 resources across three batch files. Each patient bundle contains: `Patient`, `Condition` (SNOMED CT + ICD-10), `Observation` (BP panel and biomarkers, LOINC-coded), `MedicationRequest` (RxNorm), `Encounter`, and `RiskAssessment` (deterioration band and temporal trajectory).
 
-    B1["Part 1\n210 patients\n12,958 resources"]
-    B2["Part 2\n210 patients\n12,468 resources"]
-    B3["Part 3\n211 patients\n13,644 resources"]
+Validated against HL7 FHIR Validator v6.9.4 against the R4.0.1 specification. Zero structural errors. Residual warnings are terminology-related and reflect the synthetic data source — documented limitations consistent with P2.
 
-    RES["Resources per patient\nPatient\nCondition — SNOMED + ICD-10\nObservation — BP panel + markers\nMedicationRequest\nEncounter\nRiskAssessment — band + trajectory"]
-
-    VAL["HL7 FHIR Validator v6.9.4\nFHIR R4.0.1\nTerminology-related warnings only\nNo structural FHIR errors"]
-
-    DB --> PY
-    PY --> B1 & B2 & B3
-    B1 & B2 & B3 --> RES
-    B1 & B2 & B3 --> VAL
-
-    style VAL fill:#d5e8d4,stroke:#5a9e6f,color:#000000
-    style PY fill:#f0f0f0,stroke:#999,color:#000000
-```
+| Batch | Patients | Resources |
+|---|---|---|
+| Part 1 | 210 | 12,958 |
+| Part 2 | 210 | 12,468 |
+| Part 3 | 211 | 13,644 |
+| **Total** | **631** | **39,070** |
 
 ---
 
