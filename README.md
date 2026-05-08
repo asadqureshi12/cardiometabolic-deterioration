@@ -73,71 +73,7 @@ No imputation, interpolation, or synthetic trajectory reconstruction was perform
 This design prioritises transparency and auditability over artificial signal completion.
 
 ---
----
 
-## 6. Scoring Pipeline
-
-| Marker | Guideline | Tier 0 | Tier 1 | Tier 2 | Tier 3 |
-|--------|-----------|--------|--------|--------|--------|
-| Systolic BP | NICE NG136 | <140 mmHg | 140–159 | 160–179 | ≥180 |
-| HbA1c | NICE NG28 | <7.0% | 7.0–8.4% | 8.5–9.9% | ≥10.0% |
-| LDL (CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
-| LDL (no CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
-| eGFR | KDIGO 2012 | ≥60 | 45–59 | 30–44 | <30 |
-| BMI | NICE CG189 | <25 — no floor | 25–29.9 — no floor | 30–34.9 — Band 2 floor | ≥35 — Band 3 floor |
-| **Band** | | **1** | **2** | **3** | **4** |
-
----
-
-## 6a. Four Layers
-
-<p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (1).png" style="max-width:100%;">
-</p>
-
-### Threshold Interpretation
-
-Threshold tiers were derived from NICE and KDIGO guidance to represent clinically interpretable exceedance severity bands rather than mathematically optimised risk coefficients.
-
-The scoring architecture intentionally avoids probabilistic weighting or machine learning optimisation. Each marker contributes independently to escalation behaviour through transparent rule-based logic.
-
-LDL thresholds were separated by cardiovascular disease status in alignment with NICE NG238 secondary prevention guidance.
-
-BMI operates differently from the remaining biomarkers. Rather than contributing proportionally to score escalation, BMI functions as a minimum band floor mechanism based on obesity class severity.
-
----
-
-## 7. Deterioration Band System
-
-The four-band structure represents operational prioritisation states rather than diagnostic categories.
-
-| Band | Interpretation |
-
-|---|---|
-
-| Band 1 | Stable — routine monitoring |
-
-| Band 2 | Emerging concern requiring monitoring |
-
-| Band 3 | Significant deterioration requiring review |
-
-| Band 4 | Highest-priority surveillance state |
-
-Bands were generated through combined evaluation of:
-
-- biomarker exceedance severity
-
-- obesity floor rules
-
-- deterioration trajectories
-
-- instability variance signals
-
-- escalation caps
-
-The output should therefore be interpreted as a longitudinal prioritisation state generated from multiple concurrent clinical signals.
-
----
 ## 8. Temporal Signal Logic (Integrated)
 
 Temporal modelling applied to **SBP, HbA1c, LDL only**. **BMI and eGFR excluded (D-76)** due to reduced short-term interpretability. **118 patients** met temporal sufficiency criteria.
@@ -189,10 +125,42 @@ Represents highest-risk temporal signal combination in the cohort.
   <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (2).png" style="max-width:100%;">
 </p>
 
+---
+
+## 10. Scoring Pipeline
+
+| Marker | Guideline | Tier 0 | Tier 1 | Tier 2 | Tier 3 |
+|--------|-----------|--------|--------|--------|--------|
+| Systolic BP | NICE NG136 | <140 mmHg | 140–159 | 160–179 | ≥180 |
+| HbA1c | NICE NG28 | <7.0% | 7.0–8.4% | 8.5–9.9% | ≥10.0% |
+| LDL (CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
+| LDL (no CVD) | NICE NG238 | No breach | Low excess | Moderate | High excess |
+| eGFR | KDIGO 2012 | ≥60 | 45–59 | 30–44 | <30 |
+| BMI | NICE CG189 | <25 — no floor | 25–29.9 — no floor | 30–34.9 — Band 2 floor | ≥35 — Band 3 floor |
+| **Band** | | **1** | **2** | **3** | **4** |
+| **Interpretation** | | **Stable** | **Emerging concern requiring monitoring** | **Significant deterioration requiring review** | **Highest-priority surveillance state** |
 
 ---
 
-## 10. FHIR R4 Export Architecture
+## 10a. Four Layers
+
+<p align="center">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (1).png" style="max-width:100%;">
+</p>
+
+### Threshold Interpretation
+
+Threshold tiers were derived from NICE and KDIGO guidance to represent clinically interpretable exceedance severity bands rather than mathematically optimised risk coefficients.
+
+The scoring architecture intentionally avoids probabilistic weighting or machine learning optimisation. Each marker contributes independently to escalation behaviour through transparent rule-based logic.
+
+LDL thresholds were separated by cardiovascular disease status in alignment with NICE NG238 secondary prevention guidance.
+
+BMI operates differently from the remaining biomarkers. Rather than contributing proportionally to score escalation, BMI functions as a minimum band floor mechanism based on obesity class severity.
+
+---
+
+## 11. FHIR R4 Export Architecture
 
 ```mermaid
 flowchart TD
@@ -219,7 +187,7 @@ flowchart TD
 
 ---
 
-## 11. Validation Approach
+## 12. Validation Approach
 
 ```mermaid
 flowchart TD
@@ -239,7 +207,7 @@ flowchart TD
 
 ---
 
-## 12. Technical Stack
+## 13. Technical Stack
 
 | Layer | Tool | Purpose |
 |-------|------|---------|
@@ -261,7 +229,7 @@ flowchart TD
 
 ---
 
-## 13. Clinical Problem Log — Summary
+## 14. Clinical Problem Log — Summary
 
 | Reference | Type | Summary |
 |-----------|------|---------|
@@ -278,7 +246,7 @@ flowchart TD
 
 ---
 
-## 14. Information Governance
+## 15. Information Governance
 
 ### Caldicott Principles
 
@@ -294,7 +262,7 @@ A Data Protection Impact Assessment would be required under UK GDPR Article 35 b
 
 ---
 
-## 15. Known Limitations
+## 16. Known Limitations
 
 | Limitation | Impact | Mitigation |
 |------------|--------|------------|
@@ -308,7 +276,7 @@ A Data Protection Impact Assessment would be required under UK GDPR Article 35 b
 ---
 
 
-## 16. Patient Explorer
+## 17. Patient Explorer
 
 Interactive patient drill-down — search by ID, view band, trajectory, variance, marker scores.
 
@@ -325,7 +293,7 @@ Features:
 
 ---
 
-## 17. Tableau
+## 18. Tableau
 
 <p align="center">
   <img src="screenshots/Dashboard1.png" style="max-width:100%;">
@@ -337,7 +305,7 @@ Features:
 
 ---
 
-## 18. Disclaimer
+## 19. Disclaimer
 
 Synthea-generated synthetic EHR data only. No real NHS patient data used or accessed. All identifiers are synthetic UUIDs. Not validated for clinical use. Not assessed under DCB0129. Must not be used for clinical decisions about real patients.
 
