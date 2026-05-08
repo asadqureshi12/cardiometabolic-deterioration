@@ -32,8 +32,8 @@ Cardiometabolic disease — encompassing Type 2 diabetes, cardiovascular disease
   <img src="screenshots/excalidraw-2026-05-07-1511.png" style="max-width:100%;">
 </p>
 <p align="center">
-  <img src="screenshots/excalidraw-2026-05-07-1511.png" width="900">
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (4).png" width="900">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (3).png" width="400">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (4).png" width="400">
 </p>
 ---
 
