@@ -117,6 +117,15 @@ This design prioritises transparency and auditability over artificial signal com
   <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (1).png" style="max-width:100%;">
 </p>
 
+### Threshold Interpretation
+
+Threshold tiers were derived from NICE and KDIGO guidance to represent clinically interpretable exceedance severity bands rather than mathematically optimised risk coefficients.
+
+The scoring architecture intentionally avoids probabilistic weighting or machine learning optimisation. Each marker contributes independently to escalation behaviour through transparent rule-based logic.
+
+LDL thresholds were separated by cardiovascular disease status in alignment with NICE NG238 secondary prevention guidance.
+
+BMI operates differently from the remaining biomarkers. Rather than contributing proportionally to score escalation, BMI functions as a minimum band floor mechanism based on obesity class severity.
 
 ---
 
@@ -139,7 +148,6 @@ flowchart LR
 
 ---
 
-## 8. Temporal Signal Logic
 ## 8. Temporal Signal Logic
 
 Temporal deterioration modelling was applied only to:
@@ -221,36 +229,6 @@ Within the evaluated cohort:
 | `WORSENING + UNSTABLE` | 7 |
 
 These patients represent concurrent directional deterioration and physiological instability across the monitored biomarker set.
-
-### Temporal Modelling Rationale
-
-Temporal modelling was intentionally restricted to:
-
-- systolic blood pressure
-
-- HbA1c
-
-- LDL cholesterol
-
-BMI and eGFR were excluded from trajectory logic due to different physiological behaviour and interpretability constraints (D-76).
-
-Trajectory classification identifies directional change:
-
-- `WORSENING`
-
-- `IMPROVING`
-
-- `STABLE`
-
-Variance classification independently evaluates signal volatility:
-
-- `UNSTABLE`
-
-- `STABLE`
-
-The aggregation model is explicitly non-compensatory (D-51). Any deterioration signal activates the system-level flag even if other markers improve concurrently.
-
-This approach was selected to reflect conservative clinical escalation behaviour in chronic disease monitoring.
 
 ---
 
