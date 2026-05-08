@@ -476,7 +476,7 @@ A Data Protection Impact Assessment would be required under UK GDPR Article 35 b
 
 ---
 
-## 20. Known Limitations
+## 20. Deployment Constraints & Limitations
 
 | Limitation | Impact | Mitigation |
 |------------|--------|------------|
