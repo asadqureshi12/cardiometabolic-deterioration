@@ -74,7 +74,27 @@ flowchart TD
     style PS fill:#fff2cc,stroke:#d6a500,color:#000000
     style DI fill:#f0f0f0,stroke:#999,color:#000000
 ```
+### Data Sufficiency Interpretation
 
+Temporal deterioration analysis requires repeated observations across time. Patients without sufficient longitudinal density cannot safely generate trajectory or variance signals without introducing synthetic assumptions or imputation bias.
+
+Three sufficiency states were therefore implemented:
+
+| State | Logic | Behaviour |
+
+|---|---|---|
+
+| `DATA_SUFFICIENT` | ≥2 observations across ≥3 months | Full temporal scoring enabled |
+
+| `PARTIALLY_SUFFICIENT` | ≥2 observations across ≥2 months | Severity scoring only |
+
+| `DATA_INSUFFICIENT` | Does not meet minimum temporal criteria | Mean exceedance only |
+
+No imputation, interpolation, or synthetic trajectory reconstruction was performed. Patients with sparse data remain explicitly flagged as `DATA_INSUFFICIENT` in accordance with CPL-008.
+
+This design prioritises transparency and auditability over artificial signal completion.
+
+---
 ---
 
 ## 6. Scoring Pipeline
