@@ -216,6 +216,7 @@ LDL does not have published severity tiers above the NICE NG238 target threshold
 ---
 
 ## 11. System Architecture
+
 Synthea CSVs
 │
 ▼
@@ -273,21 +274,11 @@ flowchart TD
 
 Four complementary validation and consistency analyses were applied. Given the WORSENING+UNSTABLE group contains 7 patients (CPL-010), no method achieves the n≥20 threshold required for directional statistical inference. This is retrospective observational enrichment analysis, not prospective prediction modelling. The validation pipeline demonstrates that the system is designed to be testable and that its outputs are internally consistent — it does not constitute a performance benchmark.
 
-```mermaid
-flowchart TD
-    U["Unit Tests\nlogic_unit_tests.sql\n29/29 PASS\nObservation window\nCohort logic\nScoring accuracy\nBand monotonicity"]
+<p align="center">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (12).png" style="max-width:100%;">
+</p>
 
-    G["Golden Set\ncreate_golden_set.sql\nBaseline locked\nBANDS_V6 / PS_V4 / TEMPORAL_V3"]
-
-    D["Drift Detector\ndrift_detector.sql\n12 metrics\n0 drifted rows\nNO_DRIFT_DETECTED"]
-
-    R["Retrospective Analysis\n4 methods\nWORSENING+UNSTABLE n=7\nUnderpowered — methodology\ndemonstration only — CPL-010"]
-
-    U --> G --> D --> R
-
-    style D fill:#d5e8d4,stroke:#5a9e6f,color:#000000
-    style R fill:#fff2cc,stroke:#d6a500,color:#000000
-```
+---
 
 ### V1 — Retrospective Acute Encounter Analysis
 
