@@ -54,29 +54,6 @@ Cardiometabolic disease — encompassing Type 2 diabetes, cardiovascular disease
 
 ## 5. Data Sufficiency Tiers
 
-```mermaid
-flowchart TD
-    OBS["Observations — 1yr window\n2025-04-06 to 2026-04-06\nper patient per marker"]
-
-    Q1{"obs_count >= 2\nAND months >= 3?"}
-    Q2{"obs_count >= 2\nAND months >= 2?"}
-
-    DS["DATA_SUFFICIENT\nFull scoring\nexceedance + trajectory\n+ variance"]
-    PS["PARTIALLY_SUFFICIENT\nSeverity only\nexceedance scored\nno trajectory"]
-    DI["DATA_INSUFFICIENT\nMean exceedance only\nNo temporal signal\nNot imputed — CPL-008"]
-
-    OBS --> Q1
-    Q1 -->|Yes| DS
-    Q1 -->|No| Q2
-    Q2 -->|Yes| PS
-    Q2 -->|No| DI
-
-    style DS fill:#d5e8d4,stroke:#5a9e6f,color:#000000
-    style PS fill:#fff2cc,stroke:#d6a500,color:#000000
-    style DI fill:#f0f0f0,stroke:#999,color:#000000
-```
-### Data Sufficiency Interpretation
-
 Temporal deterioration analysis requires repeated observations across time. Patients without sufficient longitudinal density cannot safely generate trajectory or variance signals without introducing synthetic assumptions or imputation bias.
 
 Three sufficiency states were therefore implemented:
