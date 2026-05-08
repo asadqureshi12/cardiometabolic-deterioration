@@ -24,6 +24,19 @@
 
 ---
 
+## Key Findings
+| Metric | Value |
+|---|---|
+| Cohort patients | 631 |
+| Temporal patients | 118 |
+| Highest-risk patients | 7 |
+| FHIR resources | 39,070 |
+| Structural FHIR errors | 0 |
+| Unit tests | 29/29 PASS |
+
+---
+
+
 ## Live Demo
 
 <p align="center">
