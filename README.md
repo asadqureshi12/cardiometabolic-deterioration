@@ -192,6 +192,7 @@ Variance classification independently evaluates signal volatility:
 The aggregation model is explicitly non-compensatory (D-51). Any deterioration signal activates the system-level flag even if other markers improve concurrently.
 
 This approach was selected to reflect conservative clinical escalation behaviour in chronic disease monitoring.
+
 ---
 
 
