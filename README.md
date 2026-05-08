@@ -109,23 +109,35 @@ BMI operates differently from the remaining biomarkers. Rather than contributing
 
 ## 7. Deterioration Band System
 
-```mermaid
-flowchart LR
-    B1["Band 1 — Stable\n166 patients 34.7%\nAll markers within\nNICE thresholds\nRoutine monitoring"]
-    B2["Band 2 — Monitor\n179 patients 37.4%\nOne marker outside\nthreshold or BMI\nClass I floor or\nRECENT CVD floor"]
-    B3["Band 3 — Concern\n56 patients 11.7%\nTwo+ markers outside\nor BMI Class II/III\nor WORSENING/UNSTABLE"]
-    B4["Band 4 — Alert\n78 patients 16.3%\nHighest risk\nMultiple breaches\nand/or both\ntemporal signals"]
+The four-band structure represents operational prioritisation states rather than diagnostic categories.
 
-    B1 --> B2 --> B3 --> B4
+| Band | Interpretation |
 
-    style B1 fill:#d5e8d4,stroke:#5a9e6f,color:#000000
-    style B2 fill:#fff2cc,stroke:#d6a500,color:#000000
-    style B3 fill:#ffe6cc,stroke:#d6820a,color:#000000
-    style B4 fill:#f8cecc,stroke:#b85450,color:#000000
-```
+|---|---|
+
+| Band 1 | Stable — routine monitoring |
+
+| Band 2 | Emerging concern requiring monitoring |
+
+| Band 3 | Significant deterioration requiring review |
+
+| Band 4 | Highest-priority surveillance state |
+
+Bands were generated through combined evaluation of:
+
+- biomarker exceedance severity
+
+- obesity floor rules
+
+- deterioration trajectories
+
+- instability variance signals
+
+- escalation caps
+
+The output should therefore be interpreted as a longitudinal prioritisation state generated from multiple concurrent clinical signals.
 
 ---
-
 ## 8. Temporal Signal Logic (Integrated)
 
 Temporal modelling applied to **SBP, HbA1c, LDL only**. **BMI and eGFR excluded (D-76)** due to reduced short-term interpretability. **118 patients** met temporal sufficiency criteria.
