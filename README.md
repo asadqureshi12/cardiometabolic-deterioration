@@ -11,6 +11,7 @@
 - Four complementary validation and consistency analyses
 - No machine learning, probabilistic modelling, or predictive calibration was performed
 - Designed as a population prioritisation system, not a diagnostic tool
+- All clinical reasoning occurs in SQL; Python is used for ingestion and FHIR export only
 
 ![FHIR Validation](https://img.shields.io/badge/FHIR_R4-Validated-green?style=flat&logo=hl7&logoColor=white)
 ![Validator](https://img.shields.io/badge/HL7_Validator-v6.9.4-blue?style=flat)
