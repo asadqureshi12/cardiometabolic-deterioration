@@ -126,87 +126,47 @@ flowchart LR
 
 ---
 
-## 8. Temporal Signal Logic
+## 8. Temporal Signal Logic (Integrated)
 
-Temporal deterioration modelling was applied only to:
-
-- systolic blood pressure (SBP)
-- HbA1c
-- LDL cholesterol
-
-BMI and eGFR were intentionally excluded from temporal modelling (D-76) due to differing physiological behaviour and reduced interpretability of short-term directional change.
-
-A total of **118 patients** met minimum temporal sufficiency criteria for longitudinal analysis.
+Temporal modelling applied to **SBP, HbA1c, LDL only**. **BMI and eGFR excluded (D-76)** due to reduced short-term interpretability. **118 patients** met temporal sufficiency criteria.
 
 ---
 
-### 8.1 Trajectory Classification
+### 8.1 Trajectory + Variance (Integrated View)
 
-For each eligible marker, directional change was calculated across the one-year observation window.
+Both directional change and stability were assessed per marker.
 
-Trajectory states were assigned as follows:
+| Component | State | Logic | Threshold |
+|---|---|---|---|
+| **Trajectory** | WORSENING | Delta exceeds deterioration threshold | SBP 0.038 / HbA1c 0.038 / LDL 0.090 |
+|  | IMPROVING | Delta exceeds improvement threshold | Same as above |
+|  | STABLE | Within bounds | Same as above |
+| **Variance** | UNSTABLE | Variance > threshold | 0.001 (D-62, RCPath) |
+|  | STABLE | Variance ≤ threshold | 0.001 |
 
-| State | Logic |
-|---|---|
-| `WORSENING` | Delta exceeds deterioration threshold |
-| `IMPROVING` | Delta exceeds improvement threshold |
-| `STABLE` | Delta remains within threshold bounds |
-
-Marker-specific thresholds:
-
-| Marker | Threshold |
-|---|---|
-| SBP | 0.038 |
-| HbA1c | 0.038 |
-| LDL | 0.090 |
+Trajectory captures **direction**, variance captures **volatility**.
 
 ---
 
-### 8.2 Variance Classification
+### 8.2 System-Level Aggregation (D-51)
 
-Trajectory direction alone may fail to identify unstable physiological behaviour. A second variance layer was therefore implemented independently of directional change.
+Non-compensatory aggregation rules:
 
-Variance was calculated per marker using a threshold of **0.001** (D-62), derived from RCPath analytical variation guidance.
+- Any marker **WORSENING → system WORSENING**
+- Any marker **UNSTABLE → system UNSTABLE**
+- Improvements do not offset deterioration elsewhere
 
-| Variance State | Logic |
-|---|---|
-| `UNSTABLE` | Variance above threshold |
-| `STABLE` | Variance below threshold |
-
-This allows detection of patients with fluctuating biomarker behaviour even where mean directional change is limited.
+This preserves conservative escalation behaviour for chronic disease monitoring.
 
 ---
 
-### 8.3 System-Level Aggregation
+### 8.3 Highest-Priority Temporal State
 
-Marker-level outputs were aggregated using a **non-compensatory escalation model** (D-51).
+| Group | Definition | Patients |
+|---|---|---|
+| **WORSENING + UNSTABLE** | Concurrent deterioration + instability across markers | 7 |
 
-System rules:
-
-- any marker classified as `WORSENING` activates system-level `WORSENING`
-- any marker classified as `UNSTABLE` activates system-level `UNSTABLE`
-- improving markers do not offset deterioration elsewhere
-
-This design intentionally mirrors conservative chronic disease escalation logic where clinically significant deterioration in one domain should not be cancelled out by improvement in another.
-
----
-
-### 8.4 Highest-Priority Temporal State
-
-Patients simultaneously classified as:
-
-- `WORSENING`
-- and `UNSTABLE`
-
-were treated as the highest-priority temporal deterioration group.
-
-Within the evaluated cohort:
-
-| Group | Patients |
-|---|---|
-| `WORSENING + UNSTABLE` | 7 |
-
-These patients represent concurrent directional deterioration and physiological instability across the monitored biomarker set.
+Represents highest-risk temporal signal combination in the cohort.
 
 ---
 
