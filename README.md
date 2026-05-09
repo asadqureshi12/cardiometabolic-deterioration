@@ -441,7 +441,6 @@ All scoring constants are stored in the `scoring_constants` reference table and 
 ---
 
 ## 18. Clinical Problem Log — Summary
-
 | Reference | Type | Summary |
 |-----------|------|---------|
 | CPL-001 | Architecture | Synthea used — UCLH unavailable, MIMIC-IV requires credentialing |
@@ -454,6 +453,7 @@ All scoring constants are stored in the `scoring_constants` reference table and 
 | CPL-008 | Architecture | 361 DATA_INSUFFICIENT — flagged honestly, not imputed |
 | CPL-009 | Clinical Rule | CKD-only patients excluded — no cardiometabolic scoring target without HTN or DM |
 | CPL-010 | Validation | Retrospective analysis underpowered (n=7) — four methods documented as methodology demonstration |
+| CPL-011 | Architecture | RxNorm retained in FHIR export — Synthea generates no dm+d codes; NHS deployment would require dm+d VMP mapping per FHIR UK Core R4 profile |
 
 ---
 
