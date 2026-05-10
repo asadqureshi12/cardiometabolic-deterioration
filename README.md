@@ -331,7 +331,6 @@ cardiometabolic-deterioration/
 │   └── index.html
 └── /docs
     ├── sprint1_log.md
-    ├── sprint2_log.md
     └── technical_report.md
 ```
 
