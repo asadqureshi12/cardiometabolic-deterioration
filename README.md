@@ -302,35 +302,38 @@ All 7 WORSENING+UNSTABLE patients in Band 4. Two independent scoring pathways wi
 
 ---
 
-## 16. Repository Structure/sql
-clean_data.sql
-load_reference.sql
-prepare_cohort.sql
-score_patients.sql
-validate_outputs.sql
-logic_unit_tests.sql
-create_golden_set.sql
-drift_detector.sql
-/python
-load_data.py
-load_snomed_map.py
-fhir_export_final_v2.py
-/fhir
-output_part1.json
-output_part2.json
-output_part3.json
-/screenshots
-dashboard1.png
-dashboard2.png
-[excalidraw diagrams]
-/explorer
-index.html
-/docs
-sprint1_log.md
-sprint2_log.md
-technical_report.md
+## 16. Repository Structure
 
----
+```
+cardiometabolic-deterioration/
+├── /sql
+│   ├── clean_data.sql
+│   ├── load_reference.sql
+│   ├── prepare_cohort.sql
+│   ├── score_patients.sql
+│   ├── validate_outputs.sql
+│   ├── logic_unit_tests.sql
+│   ├── create_golden_set.sql
+│   └── drift_detector.sql
+├── /python
+│   ├── load_data.py
+│   ├── load_snomed_map.py
+│   └── fhir_export_final_v2.py
+├── /fhir
+│   ├── output_part1.json
+│   ├── output_part2.json
+│   └── output_part3.json
+├── /screenshots
+│   ├── dashboard1.png
+│   ├── dashboard2.png
+│   └── [excalidraw diagrams]
+├── /explorer
+│   └── index.html
+└── /docs
+    ├── sprint1_log.md
+    ├── sprint2_log.md
+    └── technical_report.md
+```
 
 ## 17. Reproducibility
 
