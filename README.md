@@ -76,7 +76,7 @@ The attrition from 479 scored to 118 temporal reflects a deliberate design const
 ## 3. Cohort Selection
 
 <p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511__4_.png" style="max-width:100%;">
+  <img src="screenshots/Untitled-2026-05-07-1511 (4).png" style="max-width:100%;">
 </p>
 
 Cohort eligibility requires at least one qualifying cardiometabolic condition: Type 2 diabetes, hypertension, or established CVD. CKD without any qualifying comorbidity is excluded — see CPL-009. CVD status (ESTABLISHED / NO_CVD) is assigned at cohort entry and determines which LDL threshold applies throughout scoring (NICE NG238).
@@ -86,7 +86,7 @@ Cohort eligibility requires at least one qualifying cardiometabolic condition: T
 ## 4. CVD Status Assignment
 
 <p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511_excalidraw__3_.png" style="max-width:100%;">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (3).png" style="max-width:100%;">
 </p>
 
 CVD status is assigned at cohort entry and is fixed for the duration of scoring. Three states are possible: `RECENT` (STEMI or NSTEMI within 365 days — SNOMED 401303003 / 401314000 — Band floor 2 applied, LDL target 77.3 mg/dL per NICE NG238 post-ACS), `ESTABLISHED` (any CVD history: IHD, HF, AF, valve disease, MI/CABG — LDL target 77.3 mg/dL), `NONE` (no CVD history — LDL target 116.0 mg/dL). CVD status determines which LDL exceedance threshold is applied throughout all downstream scoring.
@@ -178,7 +178,7 @@ This is a clinical safety governance decision. Severe compromise in one domain m
 ## 8. Priority String
 
 <p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511_excalidraw__2_.png" style="max-width:100%;">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (2).png" style="max-width:100%;">
 </p>
 
 ### Annotated Example
@@ -216,7 +216,7 @@ Where `x` is the patient's observed mean value and `T` is the published guidelin
 ## 11. Four Scoring Layers
 
 <p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511_excalidraw__1_.png" style="max-width:100%;">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (1).png" style="max-width:100%;">
 </p>
 
 ---
@@ -268,7 +268,7 @@ Validated against HL7 FHIR Validator v6.9.4, R4.0.1 — zero structural errors. 
 ## 14. Validation
 
 <p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511_excalidraw__12_.png" style="max-width:100%;">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (12).png" style="max-width:100%;">
 </p>
 
 Four complementary analyses applied. The WORSENING+UNSTABLE group (n=7) does not reach the n≥20 threshold for directional statistical inference. This is retrospective observational enrichment analysis — methodology infrastructure, not a performance benchmark. See CPL-010 and `docs/technical_report.md` for full discussion.
