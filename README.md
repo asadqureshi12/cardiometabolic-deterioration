@@ -221,34 +221,7 @@ Where `x` is the patient's observed mean value and `T` is the published guidelin
 
 ---
 
-## 12. System Architecture
-
-<p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511_excalidraw.png" style="max-width:100%;">
-</p>
-Synthea CSVs
-│
-▼
-load_data.py ──────────────────── SQLite Database
-│                                        │
-load_snomed_map.py                       │
-│                              SQL Scoring Pipeline
-└─────────────────────────► clean_data.sql
-load_reference.sql
-prepare_cohort.sql
-score_patients.sql
-validate_outputs.sql
-│
-┌─────────────────────────┼─────────────────┐
-▼                         ▼                  ▼
-fhir_export_final_v2.py       Tableau Public     explorer/index.html
-│                         │                  │
-FHIR R4 Bundles          Dashboard 1 & 2     GitHub Pages
-│
-HL7 Validator v6.9.4
-0 structural errors---
-
-## 13. FHIR R4 Export
+## 12. FHIR R4 Export
 
 All 631 cohort patients exported as FHIR R4 bundles via `fhir_export_final_v2.py`. No scoring logic in Python — the script reads final SQLite outputs only. All clinical reasoning is in SQL. Each bundle contains: `Patient`, `Condition` (SNOMED CT + ICD-10), `Observation` (LOINC), `MedicationRequest` (RxNorm — CPL-011), `Encounter`, `RiskAssessment` (band and trajectory).
 
@@ -263,7 +236,7 @@ Validated against HL7 FHIR Validator v6.9.4, R4.0.1 — zero structural errors. 
 
 ---
 
-## 14. Validation
+## 13. Validation
 
 <p align="center">
   <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (12).png" style="max-width:100%;">
@@ -296,7 +269,7 @@ All 7 WORSENING+UNSTABLE patients in Band 4. Two independent scoring pathways wi
 ---
 
 
-## 15. Operational Considerations
+## 14. Operational Considerations
 
 **Observation density.** 74.5% of scored patients did not meet temporal threshold. EMIS and SystmOne chronic disease review pathways would produce substantially higher coverage. Observation density is the primary operational constraint — not the scoring architecture.
 
@@ -308,7 +281,7 @@ All 7 WORSENING+UNSTABLE patients in Band 4. Two independent scoring pathways wi
 
 ---
 
-## 16. Technical Stack
+## 15. Technical Stack
 
 | Layer | Tool | Purpose |
 |---|---|---|
@@ -329,7 +302,7 @@ All 7 WORSENING+UNSTABLE patients in Band 4. Two independent scoring pathways wi
 
 ---
 
-## 17. Repository Structure/sql
+## 16. Repository Structure/sql
 clean_data.sql
 load_reference.sql
 prepare_cohort.sql
@@ -359,7 +332,7 @@ technical_report.md
 
 ---
 
-## 18. Reproducibility
+## 17. Reproducibility
 
 Pipeline is fully deterministic. All scoring constants stored in `scoring_constants` — no parameters hardcoded in SQL. Full execution order in `docs/technical_report.md`.
 
@@ -378,7 +351,7 @@ Golden set tables (`golden_patient_bands`, `golden_priority_scores`, `golden_tem
 ---
 
 
-## 19. Clinical Problem Log — Summary
+## 18. Clinical Problem Log — Summary
 
 | Reference | Type | Summary |
 |---|---|---|
@@ -398,7 +371,7 @@ Full problem, decision, rationale, and limitation for each entry in `docs/techni
 
 ---
 
-## 20. Information Governance
+## 19. Information Governance
 
 All data is Synthea-generated synthetic EHR — no real patient data was used or accessed at any stage. Full Caldicott eight-principle compliance table, DCB0129 hazard log, and DPIA scoping in `docs/technical_report.md`.
 
@@ -408,7 +381,7 @@ All data is Synthea-generated synthetic EHR — no real patient data was used or
 
 ---
 
-## 21. Known Limitations
+## 20. Known Limitations
 
 | Limitation | Impact | Status |
 |---|---|---|
@@ -423,7 +396,7 @@ All data is Synthea-generated synthetic EHR — no real patient data was used or
 
 ---
 
-## 22. Patient Explorer
+## 21. Patient Explorer
 
 **[Launch Patient Explorer →](https://asadqureshi12.github.io/cardiometabolic-deterioration/explorer/)**
 
@@ -431,7 +404,7 @@ Search by patient ID — view deterioration band, priority string, marker scores
 
 ---
 
-## 23. Tableau Dashboards
+## 22. Tableau Dashboards
 
 **[Dashboard 1 — Population Overview](https://public.tableau.com/app/profile/33e422.prorton/viz/Cardiometabolic_Deterioration_Monitoring/Dashboard1)**
 
@@ -447,7 +420,7 @@ Search by patient ID — view deterioration band, priority string, marker scores
 
 ---
 
-## 24. Disclaimer
+## 23. Disclaimer
 
 Synthea-generated synthetic EHR data only. No real NHS patient data was used or accessed at any stage. All identifiers are synthetic UUIDs. No machine learning, probabilistic modelling, or predictive calibration was performed. This system has not been validated for clinical use and has not been assessed under DCB0129. It must not be used for clinical decisions about real patients.
 
