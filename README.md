@@ -59,7 +59,11 @@ All clinical thresholds and escalation criteria are derived from NICE, KDIGO, RC
 
 ---
 
-## 2. Cohort Pipeline
+## 2. System Architecture & Cohort Pipeline
+
+<p align="center">
+  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw.png" style="max-width:100%;">
+</p>
 
 | Stage | n |
 |---|---|
@@ -72,6 +76,7 @@ All clinical thresholds and escalation criteria are derived from NICE, KDIGO, RC
 The attrition from 479 scored to 118 temporal reflects a deliberate design constraint: trajectory and variance signals require minimum longitudinal observation density across SBP, HbA1c, and LDL. Synthea under-populates outpatient observations relative to NHS EHR systems such as EMIS or SystmOne. In a real deployment, temporal coverage would be substantially higher.
 
 ---
+
 
 ## 3. Cohort Selection
 
@@ -153,21 +158,16 @@ Of the 118 temporal patients, 7 carry a WORSENING+UNSTABLE signal. All 7 sit in 
 
 ---
 
-## 8. Temporal Signal Logic
+## 7. Temporal Signal Logic
 
-Applied to **SBP, HbA1c, and LDL only**. BMI excluded (D-76, D-79 — floor mechanism only). eGFR modelled via KDIGO stage transitions, not continuous exceedance. **118 patients** met temporal sufficiency criteria.
+Applied to **SBP, HbA1c, and LDL only**. BMI excluded (D-76/D-79 — floor mechanism only). eGFR modelled via KDIGO stage transitions. **118 patients** met temporal sufficiency criteria.
 
-| Component | State | Threshold |
+| Component | States | Basis |
 |---|---|---|
-| Trajectory | WORSENING / IMPROVING / STABLE | SBP 0.038 / HbA1c 0.038 / LDL 0.090 |
+| Trajectory | WORSENING / STABLE / IMPROVING | Marker-specific delta thresholds |
 | Variance | UNSTABLE / STABLE | 0.001 — RCPath analytical variation (D-62) |
 
-**System-level aggregation (D-51) — non-compensatory worst-case:**
-- Any marker WORSENING → system WORSENING
-- Any marker UNSTABLE → system UNSTABLE
-- Improvements in one marker do not offset deterioration elsewhere
-
-This is a clinical safety governance decision. Severe compromise in one domain must not be masked by stability in another.
+**System-level aggregation is non-compensatory (D-51):** any marker WORSENING → system WORSENING; any marker UNSTABLE → system UNSTABLE. Improvements in one marker do not offset deterioration elsewhere. This is a clinical safety governance decision — severe compromise in one domain must not be masked by stability in another. Full threshold values and rationale in `docs/technical_report.md`.
 
 | Group | Definition | n |
 |---|---|---|
@@ -250,9 +250,7 @@ HL7 Validator v6.9.4
 
 ## 13. FHIR R4 Export
 
-All 631 cohort patients exported as FHIR R4 bundles via `fhir_export_final_v2.py`. No scoring logic in Python — the script reads final SQLite outputs and maps to FHIR resource types. All clinical reasoning is in SQL.
-
-Each patient bundle contains: `Patient`, `Condition` (SNOMED CT + ICD-10), `Observation` (LOINC), `MedicationRequest` (RxNorm — see CPL-011), `Encounter`, `RiskAssessment` (band and trajectory).
+All 631 cohort patients exported as FHIR R4 bundles via `fhir_export_final_v2.py`. No scoring logic in Python — the script reads final SQLite outputs only. All clinical reasoning is in SQL. Each bundle contains: `Patient`, `Condition` (SNOMED CT + ICD-10), `Observation` (LOINC), `MedicationRequest` (RxNorm — CPL-011), `Encounter`, `RiskAssessment` (band and trajectory).
 
 | Batch | Patients | Resources |
 |---|---|---|
@@ -271,9 +269,9 @@ Validated against HL7 FHIR Validator v6.9.4, R4.0.1 — zero structural errors. 
   <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (12).png" style="max-width:100%;">
 </p>
 
-Four complementary analyses applied. The WORSENING+UNSTABLE group (n=7) does not reach the n≥20 threshold for directional statistical inference. This is retrospective observational enrichment analysis — methodology infrastructure, not a performance benchmark. See CPL-010 and `docs/technical_report.md` for full discussion.
+Four complementary analyses applied. WORSENING+UNSTABLE group (n=7) does not reach n≥20 for statistical inference — this is retrospective observational enrichment analysis, not a performance benchmark (CPL-010).
 
-### V1 — Retrospective Encounter Enrichment
+**V1 — Retrospective Encounter Enrichment**
 
 | Group | n | Acute encounters | Event rate |
 |---|---|---|---|
@@ -282,29 +280,21 @@ Four complementary analyses applied. The WORSENING+UNSTABLE group (n=7) does not
 
 Inverse result — synthetic data limitation made quantitatively explicit. Synthea does not generate the clinical trajectories that precede real-world cardiometabolic acute admissions. Scoring rules remain internally consistent and guideline-anchored.
 
-### V2 — Tier Convergence
+**V2 — Tier Convergence (strongest consistency finding)**
 
 | Group | Band 1 | Band 2 | Band 3 | Band 4 |
 |---|---|---|---|---|
 | WORSENING + UNSTABLE | 0 | 0 | 0 | 7 |
 | All other patients | 31 | 27 | 23 | 23 |
 
-All 7 WORSENING+UNSTABLE patients in Band 4. Two independent scoring pathways with no shared logic converge on the same patients — the strongest consistency finding in the set.
+All 7 WORSENING+UNSTABLE patients in Band 4. Two independent scoring pathways with no shared logic converge on the same patients.
 
-### V3 — Delta Mean Exceedance Intensity
+**V3 — Delta Mean Exceedance Intensity:** WORSENING+UNSTABLE patients show 67% higher average exceedance intensity (0.1875 vs 0.1124). Higher maximum in the unflagged group reflects single-marker extremity without trajectory — consistent with the multi-domain convergence requirement for Band 4.
 
-| Group | n | Average mean_i |
-|---|---|---|
-| WORSENING + UNSTABLE | 7 | 0.1875 |
-| All other patients | 111 | 0.1124 |
-
-67% higher average exceedance intensity in the flagged group.
-
-### V4 — Monthly Slope Analysis
-
-WORSENING+UNSTABLE: upward trend 0.021 (Apr 2025) → 0.365 (Mar 2026). All other patients: flat oscillation 0.107–0.150, no directional signal. Full month-by-month table in `docs/technical_report.md`.
+**V4 — Monthly Slope:** WORSENING+UNSTABLE group trends upward 0.021 → 0.365 across the observation window. All other patients oscillate flatly 0.107–0.150 with no directional signal. Full monthly table in `docs/technical_report.md`.
 
 ---
+
 
 ## 15. Operational Considerations
 
@@ -371,22 +361,22 @@ technical_report.md
 
 ## 18. Reproducibility
 
-The pipeline is fully deterministic. All scoring constants are stored in the `scoring_constants` reference table — no parameters are hardcoded in SQL.
+Pipeline is fully deterministic. All scoring constants stored in `scoring_constants` — no parameters hardcoded in SQL. Full execution order in `docs/technical_report.md`.
 
-| Step | File | Purpose |
-|---|---|---|
-| 1 | `load_data.py` | Ingest Synthea CSVs into SQLite |
-| 2 | `load_snomed_map.py` | Load SNOMED→ICD-10 reference |
-| 3 | `clean_data.sql` | 67-rule data quality framework |
-| 4 | `load_reference.sql` | Reference tables |
-| 5 | `prepare_cohort.sql` | Cohort eligibility and CVD status |
-| 6 | `score_patients.sql` | Scoring, bands, temporal signals |
-| 7 | `validate_outputs.sql` | Unit tests, golden set, drift detection |
-| 8 | `fhir_export_final_v2.py` | FHIR R4 export |
+| Component | Locked version |
+|---|---|
+| Band assignment | BANDS_V6 |
+| Priority scores | PS_V4 |
+| Temporal signals | TEMPORAL_V3 |
+| Drift status | NO_DRIFT_DETECTED |
+| Unit tests | 29/29 PASS |
+| FHIR validator | HL7 v6.9.4, R4.0.1 |
+| SNOMED release | NHS Digital TRUD MonolithRF2 GB_20260311 |
 
-**Locked versions:** BANDS_V6 / PS_V4 / TEMPORAL_V3 — NO_DRIFT_DETECTED. Full execution detail in `docs/technical_report.md`.
+Golden set tables (`golden_patient_bands`, `golden_priority_scores`, `golden_temporal_signals`) stored in database. `drift_detector.sql` compares any re-run against these — 12 metrics, zero drift permitted.
 
 ---
+
 
 ## 19. Clinical Problem Log — Summary
 
@@ -410,13 +400,11 @@ Full problem, decision, rationale, and limitation for each entry in `docs/techni
 
 ## 20. Information Governance
 
-This project was designed with NHS deployment governance in mind. All data is Synthea-generated synthetic EHR — no real patient data was used or accessed at any stage.
+All data is Synthea-generated synthetic EHR — no real patient data was used or accessed at any stage. Full Caldicott eight-principle compliance table, DCB0129 hazard log, and DPIA scoping in `docs/technical_report.md`.
 
-**Caldicott Principles** — Only five scoring biomarkers are processed. No social, behavioural, or unnecessary demographic data. Minimum necessary access principle applied to system design. Full eight-principle compliance table in `docs/technical_report.md`.
-
-**DCB0129** — Clinical Risk Management in Health IT would apply to any real deployment. The non-compensatory aggregation design, explicit DATA_INSUFFICIENT flagging, and two-layer output architecture were each made with DCB0129 auditability in mind. Four design-stage hazards identified and controlled — documented in `docs/technical_report.md`.
-
-**DPIA** — A Data Protection Impact Assessment under UK GDPR Article 35 would be required before real deployment. Not required for this synthetic data project.
+- **Caldicott Principles** — Only five scoring biomarkers processed. No social, behavioural, or unnecessary demographic data. Minimum necessary access principle applied to system design.
+- **DCB0129** — Would apply to any real deployment. Non-compensatory aggregation, explicit DATA_INSUFFICIENT flagging, and two-layer output architecture were each designed with DCB0129 auditability in mind. Four design-stage hazards identified and controlled.
+- **DPIA** — Required under UK GDPR Article 35 before real deployment. Not required for this synthetic data project. Legal basis, data minimisation, access controls, and patient notification obligations scoped in technical report.
 
 ---
 
@@ -424,15 +412,14 @@ This project was designed with NHS deployment governance in mind. All data is Sy
 
 | Limitation | Impact | Status |
 |---|---|---|
-| Synthea synthetic data | Does not reproduce NHS clinical complexity — V1 result inverse | Proof-of-concept throughout; rules anchored to guidelines, not dataset |
-| 75.4% DATA_INSUFFICIENT for temporal scoring | 361 patients have no trajectory signal | Synthea sparsity — EMIS/SystmOne coverage substantially higher |
+| Synthea synthetic data | V1 retrospective result inverse — expected | Proof-of-concept throughout; rules guideline-anchored, not dataset-calibrated |
+| 75.4% DATA_INSUFFICIENT for temporal scoring | 361 patients have no trajectory signal | Synthea sparsity — real EHR coverage substantially higher |
 | Retrospective analysis underpowered (n=7) | No statistical inference possible | Four-method pipeline — methodology infrastructure, not benchmark |
 | Unit normalisation not applied | Mixed units within LOINC code possible | Thresholds calibrated to Synthea conventions — documented |
 | eGFR LOINC 33914-3 deprecated | CKD-EPI replacement not in Synthea | Retained with documentation — no scoring impact |
 | RxNorm medication coding | Not valid for NHS interoperability | dm+d mapping identified as deployment prerequisite — CPL-011 |
 | 4 DATA_INSUFFICIENT rows — mean_i discrepancy (D-81) | Minor inconsistency | No downstream impact — marker_scores.mean_i is source of truth |
-
-Full limitations table with mitigation detail in `docs/technical_report.md`.
+| Deprivation scoring not implemented | Formula defined, not applied to scoring output | Locked as future scope — formula and rationale in project_reference |
 
 ---
 
