@@ -107,14 +107,16 @@ Patients with sparse data remain flagged as `DATA_INSUFFICIENT` in band assignme
 
 ---
 
-## 6. Scoring Architecture — Two Output Layers
+## 5. Scoring Architecture — Two Output Layers
 
 The system produces two parallel and independent output layers.
 
 ### Layer 1 — Priority String (Objective)
 
-A six-field structured string encoding the patient's physiological position:
-CVD_STATUS | MARKERS_BREACHING | WORST_SEVERITY | SYSTEM_TRAJECTORY | SYSTEM_VARIANCE | CONDITION_COUNT
+A four-field structured string encoding the patient's physiological position:
+
+CVD_STATUS | MARKERS_BREACHING | WORST_MARKER | CONDITION_COUNT
+
 Each field maps directly to a computable, guideline-anchored value. No subjectivity — the string reports what the data shows.
 
 ### Layer 2 — Band Assignment (Holistic, Bands 1–4)
@@ -173,22 +175,24 @@ This is a clinical safety governance decision. Severe compromise in one domain m
 
 ---
 
-## 9. Priority String
+## 8. Priority String
 
 <p align="center">
   <img src="screenshots/Untitled-2026-05-07-1511_excalidraw__2_.png" style="max-width:100%;">
 </p>
 
 ### Annotated Example
-CVD_POSITIVE | 3 | HIGH | WORSENING | UNSTABLE | 4
+
+ESTABLISHED | 3 | HbA1c:8.2/7.0 (+17.0%) | 4
+
 | Field | Value | Meaning |
 |---|---|---|
-| CVD_STATUS | `CVD_POSITIVE` | Established CVD — lower LDL threshold applies (NICE NG238) |
-| MARKERS_BREACHING | `3` | 3 of 5 markers exceed guideline threshold |
-| WORST_SEVERITY | `HIGH` | Highest single-marker exceedance >50% above threshold |
-| SYSTEM_TRAJECTORY | `WORSENING` | At least one temporal marker shows deteriorating trend |
-| SYSTEM_VARIANCE | `UNSTABLE` | At least one temporal marker above RCPath variance threshold |
+| CVD_STATUS | `ESTABLISHED` | Established CVD history — lower LDL threshold applies (77.3 mg/dL, NICE NG238) |
+| MARKERS_BREACHING | `3` | 3 of 5 scored markers exceed their guideline threshold |
+| WORST_MARKER | `HbA1c:8.2/7.0 (+17.0%)` | Highest exceedance marker — name, observed value, threshold, percentage deviation |
 | CONDITION_COUNT | `4` | 4 active coded cardiometabolic conditions |
+
+A clinician reading this string can immediately identify that this patient has established CVD, three markers above threshold, HbA1c as the most deviated marker at 17% above the NICE NG28 target, and a high comorbidity burden — without needing to interpret a composite score. Trajectory and variance signals are captured in the band assignment layer and surfaced separately in the patient explorer and Tableau dashboards.
 
 ---
 
