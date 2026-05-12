@@ -165,7 +165,7 @@ Applied to **SBP, HbA1c, and LDL only**. BMI excluded (D-76/D-79 — floor mecha
 | Component | States | Basis |
 |---|---|---|
 | Trajectory | WORSENING / STABLE / IMPROVING | Marker-specific delta thresholds |
-| Variance | UNSTABLE / STABLE | 0.001 — RCPath analytical variation (D-62) |
+| Variance | UNSTABLE / STABLE | 0.001 — distributional analysis; RCPath CV corroborates noise floor |
 
 **System-level aggregation is non-compensatory (D-51):** any marker WORSENING → system WORSENING; any marker UNSTABLE → system UNSTABLE. Improvements in one marker do not offset deterioration elsewhere. This is a clinical safety governance decision — severe compromise in one domain must not be masked by stability in another. Full threshold values and rationale in `docs/technical_report.md`.
 
