@@ -84,7 +84,7 @@ The attrition from 479 scored to 118 temporal reflects a deliberate design const
   <img src="screenshots/Untitled-2026-05-07-1511 (4).png" style="max-width:100%;">
 </p>
 
-Cohort eligibility requires at least one qualifying cardiometabolic condition: Type 2 diabetes, hypertension, or established CVD. CKD without any qualifying comorbidity is excluded — see CPL-009. CVD status (ESTABLISHED / NO_CVD) is assigned at cohort entry and determines which LDL threshold applies throughout scoring (NICE NG238).
+Cohort eligibility requires at least one qualifying cardiometabolic condition: Type 2 diabetes, hypertension, or established CVD. CKD without any qualifying comorbidity is excluded — see CPL-009. CVD status (ESTABLISHED / NO_CVD) is assigned at cohort entry and determines which LDL threshold applies throughout scoring (NICE NG238). The cohort is constructed using NHS England QOF Business Rules SNOMED code sets — not a real QOF register, which does not exist in synthetic data.
 
 ---
 
@@ -114,7 +114,7 @@ Patients with sparse data remain flagged as `DATA_INSUFFICIENT` in band assignme
 
 ## 5. Scoring Architecture — Two Output Layers
 
-The system produces two parallel and independent output layers.
+The system produces two parallel output layers. Band assignment incorporates temporal trajectory signals as one of four scoring layers — the layers are parallel in output but share temporal signal data.
 
 ### Layer 1 — Priority String (Objective)
 
@@ -154,7 +154,7 @@ Band assignment covers all 479 scored patients. Temporal scoring is a downstream
 | 4 | 78 | Highest-priority surveillance state |
 | **Total** | **479** | |
 
-Of the 118 temporal patients, 7 carry a WORSENING+UNSTABLE signal. All 7 sit in Band 4 — arrived at through two independent scoring pathways with no shared logic.
+Of the 118 temporal patients, 7 carry a WORSENING+UNSTABLE signal. All 7 sit in Band 4. Band assignment and temporal signal computation share no direct input data but are not fully independent — the band layer incorporates temporal signals as Layer 3 inputs. Convergence is partly architectural design and partly an empirical finding.
 
 ---
 
@@ -232,7 +232,7 @@ All 631 cohort patients exported as FHIR R4 bundles via `fhir_export_final_v2.py
 | Part 3 | 211 | 13,644 |
 | **Total** | **631** | **39,070** |
 
-Validated against HL7 FHIR Validator v6.9.4, R4.0.1 — zero structural errors. Residual warnings are terminology-related and reflect the synthetic data source.
+Validated against HL7 FHIR Validator v6.9.4, R4.0.1 — zero structural errors. Residual warnings are terminology-related and reflect the synthetic data source. Validation is against base FHIR R4.0.1 only. NHS deployment requires FHIR UK Core R4 conformance, which imposes additional constraints not tested here — see CPL-011.
 
 ---
 
@@ -260,9 +260,9 @@ Inverse result — synthetic data limitation made quantitatively explicit. Synth
 | WORSENING + UNSTABLE | 0 | 0 | 0 | 7 |
 | All other patients | 31 | 27 | 23 | 23 |
 
-All 7 WORSENING+UNSTABLE patients in Band 4. Two independent scoring pathways with no shared logic converge on the same patients.
+All 7 WORSENING+UNSTABLE patients in Band 4. Band assignment and temporal signal computation converge on the same patients. The two layers share no direct input data but are not fully independent — temporal signals feed into band assignment as Layer 3. Convergence is partly a structural consequence of the scoring architecture and partly an empirical finding.
 
-**V3 — Delta Mean Exceedance Intensity:** WORSENING+UNSTABLE patients show 67% higher average exceedance intensity (0.1875 vs 0.1124). Higher maximum in the unflagged group reflects single-marker extremity without trajectory — consistent with the multi-domain convergence requirement for Band 4.
+**V3 — Internal Consistency Check:** WORSENING+UNSTABLE patients show 67% higher average exceedance intensity (0.1875 vs 0.1124). This confirms the scoring formula was applied correctly — mean exceedance intensity is the measure used to identify these patients, so higher intensity in the flagged group is an expected arithmetic consequence, not an independent validation finding. Higher maximum intensity in the unflagged group reflects single-marker extremity without trajectory — consistent with the multi-domain convergence requirement for Band 4.
 
 **V4 — Monthly Slope:** WORSENING+UNSTABLE group trends upward 0.021 → 0.365 across the observation window. All other patients oscillate flatly 0.107–0.150 with no directional signal. Full monthly table in `docs/technical_report.md`.
 
@@ -297,7 +297,7 @@ All 7 WORSENING+UNSTABLE patients in Band 4. Two independent scoring pathways wi
 | Medications | RxNorm | Medication coding (see CPL-011) |
 | Thresholds | NICE NG136, NG28, NG238, CG189 | Exceedance thresholds |
 | Thresholds | KDIGO 2012 | eGFR staging |
-| Thresholds | RCPath | Variance threshold (D-62) |
+| Thresholds | RCPath | Variance threshold noise floor corroboration (D-62) |
 | Interoperability | HL7 FHIR R4.0.1 | Export standard |
 
 ---
@@ -359,10 +359,10 @@ Golden set tables (`golden_patient_bands`, `golden_priority_scores`, `golden_tem
 | Reference | Type | Summary |
 |---|---|---|
 | CPL-001 | Architecture | Synthea used — UCLH unavailable, MIMIC-IV requires credentialing |
-| CPL-002 | Architecture | Original design pivoted — Synthea has no waiting list fields |
+| CPL-002 | Architecture | Original RTT design pivoted — Synthea has no waiting list fields. Cardiometabolic deterioration monitoring selected as replacement: higher NHS secondary care impact, directly applicable to NICE-anchored biomarker thresholds, and architecturally distinct from P2 |
 | CPL-003 | Clinical Rule | BMI floor rule — excluded from dynamic argmax — D-79, NICE CG189 |
 | CPL-004 | Clinical Rule | Acute SBP excluded — NICE NG136 resting BP only — D-80 |
-| CPL-005 | Clinical Rule | Variance threshold 0.001 — RCPath analytical variation — D-62 |
+| CPL-005 | Clinical Rule | Variance threshold 0.001 — empirical distribution analysis; RCPath CV corroborates noise floor — D-62 |
 | CPL-006 | Clinical Rule | Non-compensatory aggregation — any signal fires system flag — D-51 |
 | CPL-007 | Clinical Rule | Scope limited to metabolic deterioration — plaque rupture explicitly out of scope |
 | CPL-008 | Architecture | 361 DATA_INSUFFICIENT — flagged honestly, not imputed |
@@ -396,6 +396,7 @@ All data is Synthea-generated synthetic EHR — no real patient data was used or
 | RxNorm medication coding | Not valid for NHS interoperability | dm+d mapping identified as deployment prerequisite — CPL-011 |
 | 4 DATA_INSUFFICIENT rows — mean_i discrepancy (D-81) | Minor inconsistency | No downstream impact — marker_scores.mean_i is source of truth |
 | Deprivation scoring not implemented | Formula defined, not applied to scoring output | Locked as future scope — formula and rationale in project_reference |
+| 152 cohort patients produce no scoring output | 24.1% of clinically eligible patients have no observable data in the 12-month window | Synthea data sparsity — explicitly modelled as data absence, not exclusion. Real EHR data would produce substantially lower unscored proportion. |
 
 ---
 
