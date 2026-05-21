@@ -399,6 +399,7 @@ All data is Synthea-generated synthetic EHR — no real patient data was used or
 | Deprivation scoring not implemented | Formula defined, not applied to scoring output | Locked as future scope — formula and rationale in project_reference |
 | 152 cohort patients produce no scoring output | 24.1% of clinically eligible patients have no observable data in the 12-month window | Synthea data sparsity — explicitly modelled as data absence, not exclusion. Real EHR data would produce substantially lower unscored proportion. |
 | 5 of 46 cohort SNOMED codes not in NHS England PCD refset | Codes for hyperlipidaemia, hypertriglyceridaemia, seizure disorder, neoplasm of prostate, and carcinoma in situ of prostate are not present in PCD refset releases 20260212 or 20260424 | Included on clinical judgement — all 5 are clinically legitimate chronic conditions present in Synthea data. Childhood asthma and prediabetes were intentionally excluded as paediatric and pre-diagnostic respectively. |
+| 15 scored patients have no cardiometabolic qualifying condition | Patients with only epilepsy or seizure disorder codes entered the cohort through QOF neurological register codes and were scored | All 15 are Band 1 — no exceedance signal without cardiometabolic markers. No clinical impact on scoring outputs. Confirmed by SQL. |
 
 ---
 
