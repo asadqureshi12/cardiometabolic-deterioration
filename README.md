@@ -3,7 +3,7 @@
 ## TL;DR
 
 - Rule-based cardiometabolic deterioration monitoring system built in SQL with Python and FHIR export
-- 631-patient synthetic cohort derived from Synthea 1,113-patient EHR
+- 631-patient QOF-derived chronic disease cohort constructed from Synthea 1,113-patient EHR
 - Two parallel output layers: objective clinician-facing priority string and holistic band assignment
 - 4-layer scoring architecture: threshold exceedance → BMI floor → temporal signals → clinical caps
 - Flags patients with concurrent deterioration trajectory and instability across biomarker domains
@@ -28,7 +28,7 @@
 | Metric | Value |
 |---|---|
 | Source patients | 1,113 |
-| Cardiometabolic cohort | 631 |
+| QOF chronic disease cohort | 631 |
 | Scored patients | 479 |
 | Temporal signal computed | 118 |
 | Highest-priority (WORSENING + UNSTABLE) | 7 |
@@ -68,7 +68,7 @@ All clinical thresholds and escalation criteria are derived from NICE, KDIGO, RC
 | Stage | n |
 |---|---|
 | Source patients (Synthea) | 1,113 |
-| Cardiometabolic cohort (CKD-only exclusion applied) | 631 |
+| QOF chronic disease cohort (CKD-only exclusion applied) | 631 |
 | Scored (sufficient marker data) | 479 |
 | Temporal signal computed (observation density threshold met) | 118 |
 | WORSENING + UNSTABLE | 7 |
@@ -84,7 +84,7 @@ The attrition from 479 scored to 118 temporal reflects a deliberate design const
   <img src="screenshots/Untitled-2026-05-07-1511 (4).png" style="max-width:100%;">
 </p>
 
-Cohort eligibility requires at least one qualifying cardiometabolic condition: Type 2 diabetes, hypertension, or established CVD. CKD without any qualifying comorbidity is excluded — see CPL-009. CVD status (ESTABLISHED / NO_CVD) is assigned at cohort entry and determines which LDL threshold applies throughout scoring (NICE NG238). The cohort is constructed using NHS England QOF Business Rules SNOMED code sets — not a real QOF register, which does not exist in synthetic data.
+The cohort is constructed using 46 SNOMED codes identified from NHS England QOF clinical disease register condition groups and confirmed present in the Synthea dataset, verified against the NHS England Primary Care Domain refset (release 20260212). SNOMED codes were mapped to ICD-10 via NHS Digital TRUD ExtendedMap GB_20260311. Code selection was scoped to adult chronic conditions with at least one active cardiometabolic scoring pathway (SBP, HbA1c, LDL, BMI, or eGFR). Paediatric conditions (childhood asthma) and pre-diagnostic states (prediabetes) were excluded as they fall outside the NICE-defined threshold framework applied by the scoring engine. CKD without any qualifying cardiometabolic comorbidity is excluded — see CPL-009. CVD status (ESTABLISHED / RECENT / NONE) is assigned at cohort entry and determines which LDL threshold applies throughout scoring (NICE NG238). In a real NHS deployment, this cohort would correspond to patients on QOF chronic disease registers maintained by GP practices — in this synthetic data project, the equivalent population is constructed by code matching against Synthea condition data.
 
 ---
 
@@ -112,7 +112,7 @@ Patients with sparse data remain flagged as `DATA_INSUFFICIENT` in band assignme
 
 ---
 
-## 5. Scoring Architecture — Two Output Layers
+## 6. Scoring Architecture — Two Output Layers
 
 The system produces two parallel output layers. Band assignment incorporates temporal trajectory signals as one of four scoring layers — the layers are parallel in output but share temporal signal data.
 
@@ -158,7 +158,7 @@ Of the 118 temporal patients, 7 carry a WORSENING+UNSTABLE signal. All 7 sit in 
 
 ---
 
-## 7. Temporal Signal Logic
+## 8. Temporal Signal Logic
 
 Applied to **SBP, HbA1c, and LDL only**. BMI excluded (D-76/D-79 — floor mechanism only). eGFR modelled via KDIGO stage transitions. **118 patients** met temporal sufficiency criteria.
 
@@ -175,7 +175,7 @@ Applied to **SBP, HbA1c, and LDL only**. BMI excluded (D-76/D-79 — floor mecha
 
 ---
 
-## 8. Priority String
+## 9. Priority String
 
 <p align="center">
   <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (2).png" style="max-width:100%;">
@@ -369,6 +369,7 @@ Golden set tables (`golden_patient_bands`, `golden_priority_scores`, `golden_tem
 | CPL-009 | Clinical Rule | CKD-only patients excluded — no cardiometabolic scoring target without HTN or DM |
 | CPL-010 | Validation | Retrospective analysis underpowered (n=7) — four methods documented as methodology demonstration |
 | CPL-011 | Architecture | RxNorm retained in FHIR export — Synthea generates no dm+d codes; NHS deployment requires dm+d VMP mapping per FHIR UK Core R4 profile |
+| CPL-012 | Validation | BANDS_V1 and BANDS_V2 bug — 360 patients incorrectly UNSCORED due to conflation of tier computability and temporal evaluability. Corrected in BANDS_V3. Golden set locked at BANDS_V6 |
 
 Full problem, decision, rationale, and limitation for each entry in `docs/technical_report.md`.
 
