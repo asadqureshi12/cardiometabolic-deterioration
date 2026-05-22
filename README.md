@@ -4,7 +4,7 @@
 
 - Rule-based cardiometabolic deterioration monitoring system built in SQL with Python and FHIR export
 - 631-patient QOF-derived chronic disease cohort constructed from Synthea 1,113-patient EHR
-- Two parallel output layers: objective clinician-facing priority string and holistic band assignment
+- Two parallel output layers: deterministic clinician-facing priority string and holistic band assignment
 - 4-layer scoring architecture: threshold exceedance → BMI floor → temporal signals → clinical caps
 - Flags patients with concurrent deterioration trajectory and instability across biomarker domains
 - FHIR R4 export — 39,070 resources, zero structural errors, HL7 Validator v6.9.4
@@ -116,9 +116,9 @@ Patients with sparse data remain flagged as `DATA_INSUFFICIENT` in band assignme
 
 The system produces two parallel output layers. Band assignment incorporates temporal trajectory signals as one of four scoring layers — the layers are parallel in output but share temporal signal data.
 
-### Layer 1 — Priority String (Objective)
+### Layer 1 — Priority String (Deterministic)
 
-A four-field structured string encoding the patient's physiological position:
+A four-field deterministic clinician-facing summary string encoding the patient's physiological position:
 
 CVD_STATUS | MARKERS_BREACHING | WORST_MARKER | CONDITION_COUNT
 
@@ -140,6 +140,8 @@ The separation of these two layers reflects the DCB0129 principle that clinical 
 | Easier DCB0129 auditability | Requires extensive real-world validation |
 | Suitable for synthetic proof-of-concept | Requires real-world training data |
 
+A single continuous risk score was intentionally avoided to preserve interpretability and prevent compensatory averaging between physiological domains — consistent with the non-compensatory aggregation principle applied throughout the scoring engine (D-51, CPL-006).
+
 ---
 
 ## 7. Band Distribution
@@ -151,10 +153,10 @@ Band assignment covers all 479 scored patients. Temporal scoring is a downstream
 | 1 | 166 | Stable — no active exceedance |
 | 2 | 179 | Emerging concern — monitoring indicated |
 | 3 | 56 | Significant deterioration — clinical review |
-| 4 | 78 | Highest-priority surveillance state |
+| 4 | 78 | Highest escalation band within the scoring framework |
 | **Total** | **479** | |
 
-Of the 118 temporal patients, 7 carry a WORSENING+UNSTABLE signal. All 7 sit in Band 4. Band assignment and temporal signal computation share no direct input data but are not fully independent — the band layer incorporates temporal signals as Layer 3 inputs. Convergence is partly architectural design and partly an empirical finding.
+Of the 118 temporal patients, 7 carry a WORSENING+UNSTABLE signal. All 7 sit in Band 4. Band assignment and temporal signal computation are generated through separate scoring pathways, although temporal outputs are incorporated into Layer 3 of band assignment. Convergence is partly architectural design and partly an empirical finding.
 
 ---
 
@@ -202,8 +204,8 @@ A clinician reading this string can immediately identify that this patient has e
 |---|---|---|---|---|---|
 | Systolic BP | NICE NG136 | <140 mmHg | 140–159 | 160–179 | ≥180 |
 | HbA1c | NICE NG28 | <7.0% | 7.0–8.4% | 8.5–9.9% | ≥10.0% |
-| LDL (CVD+) | NICE NG238 | No breach | 0–25% excess | 25–50% excess | >50% excess |
-| LDL (no CVD) | NICE NG238 | No breach | 0–25% excess | 25–50% excess | >50% excess |
+| LDL (CVD+) | NICE NG238 — threshold 2.0 mmol/L | No breach | 0–25% excess | 25–50% excess | >50% excess |
+| LDL (no CVD) | NICE NG238 — threshold 3.0 mmol/L | No breach | 0–25% excess | 25–50% excess | >50% excess |
 | eGFR | KDIGO 2012 | ≥60 | 45–59 | 30–44 | <30 |
 | BMI | NICE CG189 | <25 | 25–29.9 | 30–34.9 → Band 2 floor | ≥35 → Band 3 floor |
 
@@ -242,7 +244,7 @@ Validated against HL7 FHIR Validator v6.9.4, R4.0.1 — zero structural errors. 
   <img src="screenshots/Untitled-2026-05-07-1511.excalidraw (12).png" style="max-width:100%;">
 </p>
 
-Four complementary analyses applied. WORSENING+UNSTABLE group (n=7) does not reach n≥20 for statistical inference — this is retrospective observational enrichment analysis, not a performance benchmark (CPL-010).
+Four internal consistency and retrospective exploratory analyses applied. WORSENING+UNSTABLE group (n=7) does not reach n≥20 for statistical inference — this is retrospective observational enrichment analysis, not a performance benchmark (CPL-010).
 
 **V1 — Retrospective Encounter Enrichment**
 
@@ -251,7 +253,7 @@ Four complementary analyses applied. WORSENING+UNSTABLE group (n=7) does not rea
 | WORSENING + UNSTABLE | 7 | 0 | 0.0% |
 | All other patients | 111 | 17 | 15.3% |
 
-Inverse result — synthetic data limitation made quantitatively explicit. Synthea does not generate the clinical trajectories that precede real-world cardiometabolic acute admissions. Scoring rules remain internally consistent and guideline-anchored.
+Included to test whether synthetic encounter generation exhibited any directional enrichment signal relative to deterioration status. Inverse result — Synthea does not generate the clinical trajectories that precede real-world cardiometabolic acute admissions. Scoring rules remain internally consistent and guideline-anchored. This is a dataset-behaviour finding, not a predictive validation failure.
 
 **V2 — Tier Convergence (strongest consistency finding)**
 
