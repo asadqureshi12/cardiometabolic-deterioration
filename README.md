@@ -187,7 +187,7 @@ ESTABLISHED | 3 | HbA1c:8.2/7.0 (+17.0%) | 4
 
 | Field | Value | Meaning |
 |---|---|---|
-| CVD_STATUS | `ESTABLISHED` | Established CVD history — lower LDL threshold applies (77.3 mg/dL, NICE NG238) |
+| CVD_STATUS | `ESTABLISHED` | Established CVD history — lower LDL threshold applies (2.0 mmol/L / 77.3 mg/dL, NICE NG238) |
 | MARKERS_BREACHING | `3` | 3 of 5 scored markers exceed their guideline threshold |
 | WORST_MARKER | `HbA1c:8.2/7.0 (+17.0%)` | Highest exceedance marker — name, observed value, threshold, percentage deviation |
 | CONDITION_COUNT | `4` | 4 active coded cardiometabolic conditions |
