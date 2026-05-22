@@ -1,8 +1,9 @@
-# P3: Clinical Deterioration Monitoring System
-# Sprint 1 Log — Schema, Load, Clean, FHIR Pilot Validation
-# Date: 2026-04-08
-# Builder: MBBS Graduate, MSc Health Informatics (Swansea, Sept 2026)
-# Role framing: Clinical Systems Lead / Product Owner
+## P3: Clinical Deterioration Monitoring System
+
+- Sprint 1 Log — Schema, Load, Clean, FHIR Pilot Validation
+- Date: 2026-04-08
+- Builder: MBBS Graduate, MSc Health Informatics (Swansea, Sept 2026)
+- Role framing: Clinical Systems Lead / Product Owner
 
 ---
 
@@ -25,7 +26,7 @@
 | schema.sql v3.0 | 9-table SQLite schema with FHIR fields |
 | load_snomed_map.py | Populates snomed_icd10_map reference table |
 | load_data.py | Pure CSV to SQLite loader |
-| data_quality.sql | 29 data quality rules |
+| data_quality.sql | 67 data quality rules |
 | run_quality_check.py | Python runner for quality checks |
 | clean_data.sql | 16-section cleaning and FHIR prep script |
 | fhir_pilot.py | 2-patient FHIR R4 bundle exporter |
@@ -503,14 +504,15 @@ Database ready for Sprint 2
 - Trajectory scoring engine: delta calculation, acute cluster exclusion,
   high-density episode collapsing
 - Deterioration band assignment
-- Clinical alert generation
-
+and applies only to conditions retained after chronic classification and domain segmentation
 ---
 
 *Sprint 1 complete. All files version-controlled. Next session: Sprint 2.*
-**UPDATED DECISION LOG — P3 Sprint 2 Pre-Implementation**
-**Date: 2026-04-13**
+
+**UPDATED DECISION LOG — P3 Sprint 2 Pre-Implementation and Beyond**
+**Date: 2026-04-13 onward**
 **Covers: All decisions made after sprint1_log.md D-29 through D-33**
+**Note: All sprint decisions are consolidated in this file. No separate sprint2_log.md exists — Sprint 2, Sprint 3, Sprint 4, and Sprint 5 decisions are appended here in chronological order. Sprint 4 references in CPL-012 refer to the validation phase. Sprint 5 references in CPL-010 and CPL-011 refer to the FHIR export phase. Individual sprint decisions are recorded in the project_reference table in the database.**
 
 ---
 
@@ -520,7 +522,7 @@ Every condition row now has an explicit complication_category state. NULL replac
 ---
 
 **D-35: Chronic classification primary rule — QOF SNOMED codes**
-Primary chronic classification uses NHS England QOF Business Rules SNOMED code lists. A condition is chronic if its SNOMED code appears on a QOF register. Source: NHS Digital TRUD QOF Business Rules. Rationale: QOF is the NHS-endorsed operational definition of long-term conditions in clinical practice. It is SNOMED-based, directly applicable to your data without ICD-10 dependency, and publicly citable. ICD-10 mapping is performed after chronic classification, not before.
+Primary chronic classification uses NHS England QOF clinical disease register condition groups as the framework for identifying chronic conditions. 46 SNOMED codes meeting this criteria were identified as present in the Synthea dataset and verified against the NHS England Primary Care Domain refset (release 20260212). 41 of 46 codes confirmed in the PCD refset. 5 codes (hyperlipidaemia, hypertriglyceridaemia, seizure disorder, neoplasm of prostate, carcinoma in situ of prostate) are not in the PCD refset. These codes predate the project's citable-reference principle — the cohort was constructed before that principle was formalised. Re-running cohort selection was assessed as low priority as all 5 are clinically legitimate conditions present in Synthea data and all affected patients produce no exceedance signal. This is a documented process drift, not a clinical judgement decision. ICD-10 mapping is performed after chronic classification using NHS Digital TRUD ExtendedMap GB_20260311 and applies only to conditions retained after chronic classification and domain segmentation. Paediatric conditions (childhood asthma) and pre-diagnostic states (prediabetes) were excluded as they fall outside the NICE-defined threshold framework applied by the scoring engine. Source: NHS England Primary Care Domain refset release 20260212; NHS Digital TRUD ExtendedMap GB_20260311. Rationale: QOF is the NHS-endorsed operational definition of long-term conditions in clinical practice. It is SNOMED-based, directly applicable to your data without ICD-10 dependency, and publicly citable. ICD-10 mapping is performed after chronic classification, not before.
 
 ---
 
@@ -530,7 +532,7 @@ For conditions not covered by QOF, chronic classification uses the SNOMED CT COR
 ---
 
 **D-37: Tier 2 non-cardiometabolic conditions — deferred**
-Non-cardiometabolic chronic conditions (Tier 2) excluded from current project scope. The scoring engine, band assignment, and clinical output are complete using QOF cardiometabolic conditions only. Tier 2 expansion documented as planned future iteration pending UMLS licence. Rationale: Tier 2 does not affect NICE scoring, trajectory, variance, CVD status, or band assignment. Including an incomplete Tier 2 weakens the portfolio. Scope discipline is architecturally stronger than an incomplete expansion.
+The cohort is constructed using 46 SNOMED codes from NHS England QOF clinical disease register condition groups — a broad chronic disease population including cardiometabolic, neurological, respiratory, oncological, and other conditions. Cardiometabolic scoring markers (SBP, HbA1c, LDL, BMI, eGFR) apply only to patients with qualifying cardiometabolic conditions. Patients with only non-cardiometabolic QOF conditions (epilepsy, cancer, dementia) produce no exceedance signal and land in Band 1. 15 patients in the current scoring output have no cardiometabolic qualifying condition — all Band 1, no clinical impact. The scoring engine, band assignment, and temporal signals are complete using NICE-anchored cardiometabolic thresholds only. Scope discipline is maintained — the broad cohort mirrors real NHS QOF register populations where all chronic conditions are tracked but cardiometabolic monitoring protocols are condition-specific.
 
 ---
 
@@ -609,26 +611,22 @@ Step 1: highest mean(I) across scored markers. Step 2: if tied → highest max(I
 
 ---
 
-**D-53: Universal patient string — six fields, fixed positions**
+**D-53: Universal patient string — four fields, fixed positions**
 
-```
-CVD_STATUS | MARKERS_BREACHING | WORST_SEVERITY | SYSTEM_TRAJECTORY | SYSTEM_VARIANCE | CONDITION_COUNT
-```
+CVD_STATUS | MARKERS_BREACHING | WORST_MARKER | CONDITION_COUNT
 
 Field definitions locked:
 - CVD_STATUS: NONE / ESTABLISHED / RECENT
 - MARKERS_BREACHING: integer count of markers with mean(I) > 0, or DATA_INSUFFICIENT
-- WORST_SEVERITY: MARKER:mean(x)/target e.g. HBA1C:84/53, or NO_DEVIATION if count=0, or DATA_INSUFFICIENT
-- SYSTEM_TRAJECTORY: STABLE / WORSENING / IMPROVING / DATA_INSUFFICIENT — non-compensatory
-- SYSTEM_VARIANCE: STABLE / UNSTABLE / DATA_INSUFFICIENT — non-compensatory
+- WORST_MARKER: MARKER:mean(x)/target (+deviation%) e.g. HbA1c:8.2/7.0 (+17.0%), or NO_DEVIATION if count=0, or DATA_INSUFFICIENT
 - CONDITION_COUNT: integer count of active QOF chronic conditions
 
-Semantic map: NULL = calculated, result is absence of breach. DATA_INSUFFICIENT = could not calculate. NO_DEVIATION = all markers within target. Each field fixed position — same meaning across every patient. DOMINANT_MARKER retained as separate database column, available in Tableau Mode 1, not in primary string.
+SYSTEM_TRAJECTORY and SYSTEM_VARIANCE were removed from the patient string in final implementation. Both signals are retained as separate columns in golden_priority_scores and are surfaced in the patient explorer and Tableau dashboards. The patient string is the objective four-field clinical summary only. Confirmed from live golden_priority_scores output. DOMINANT_MARKER retained as separate database column, available in Tableau, not in primary string.
 
 ---
 
 **D-54: Two output modes**
-Mode 1: full information display in Tableau — per marker detail, all signals, interactive drill-down from population to patient to observation. No algorithmic judgement. Clinician interprets. Mode 2: universal patient string — objective, six fixed fields, one row per patient. Primary output of the system. Band and colour are secondary operational tools clearly labelled as decision support. Rationale: Mode 1 satisfies DCB0129 — system surfaces all relevant data and leaves clinical judgement to clinician. Mode 2 satisfies operational requirement — single actionable summary per patient.
+Mode 1: full information display in Tableau — per marker detail, all signals, interactive drill-down from population to patient to observation. No algorithmic judgement. Clinician interprets. Mode 2: universal patient string — objective, four fixed fields, one row per patient. Primary output of the system. Band and colour are secondary operational tools clearly labelled as decision support. Rationale: Mode 1 satisfies DCB0129 — system surfaces all relevant data and leaves clinical judgement to clinician. Mode 2 satisfies operational requirement — single actionable summary per patient.
 
 ---
 
