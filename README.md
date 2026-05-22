@@ -129,6 +129,8 @@ The system was designed with NHS operational deployment prerequisites in mind. F
 
 **Coding quality.** Cohort eligibility depends on accurate SNOMED condition coding in the source EHR. A coding audit is a prerequisite for deployment.
 
+A proposed NHS deployment architecture including data flow, integration prerequisites, scheduling cadence, and governance boundaries is documented in `docs/clinical_safety_and_validation.md` Section 6.
+
 ---
 
 ## 5. Validation & Reproducibility
