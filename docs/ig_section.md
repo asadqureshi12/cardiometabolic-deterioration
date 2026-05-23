@@ -1,4 +1,4 @@
-Information Governance
+# Information Governance
 
 The system was designed with governance in mind from the start — every threshold is traceable to a named NICE or KDIGO guideline, every design decision is documented in the sprint log and clinical problem log, and data quality is surfaced as a first-class output rather than hidden.
 
