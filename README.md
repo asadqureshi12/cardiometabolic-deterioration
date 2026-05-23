@@ -18,10 +18,26 @@
 - Two parallel output layers: deterministic clinician-facing priority string and holistic band assignment
 - 4-layer scoring architecture: threshold exceedance → BMI floor → temporal signals → clinical caps
 - Flags patients with concurrent deterioration trajectory and instability across biomarker domains
-- FHIR R4 export — 39,070 resources, zero structural errors, HL7 Validator v6.9.4
+- FHIR R4 export — 39,070 resources, zero structural errors, HL7 Validator v6.9.4 (base R4 only — not UK Core conformant; MedicationRequest uses RxNorm as Synthea emits no dm+d codes; medications not used in scoring)
 - Four internal consistency and retrospective exploratory analyses
 - No machine learning, probabilistic modelling, or predictive calibration
 - All clinical reasoning in SQL — Python used for ingestion and FHIR export only
+
+---
+
+## Portfolio Relevance
+
+This project was built to demonstrate health informatics capability across:
+
+- Clinical guideline translation into deterministic SQL scoring rules
+- Longitudinal patient cohort construction using NHS terminology standards
+- SNOMED CT, ICD-10, LOINC, and FHIR R4 handling
+- Data quality frameworks, unit testing, and reproducible pipeline design
+- Drift detection and golden set validation infrastructure
+- Clinical safety and information governance awareness — DCB0129, Caldicott, DPIA
+- Dashboard and patient-level review interface design
+
+The project uses Synthea synthetic EHR data only. It is not a clinically validated medical device or decision-support tool.
 
 ---
 
@@ -29,7 +45,7 @@
 
 This system demonstrates a proactive, rule-based cardiometabolic deterioration monitoring architecture built on a 631-patient QOF-derived chronic disease cohort, producing two parallel outputs: a deterministic clinician-facing priority string and a four-band escalation signal.
 
-Built as a synthetic proof-of-concept using Synthea EHR data, the system is designed with NHS operational deployment in mind — guideline-traceable scoring rules, explicit data insufficiency flagging, FHIR R4 interoperability, DCB0129-aware architecture, and a fully deterministic reproducible pipeline. Clinical reasoning lives entirely in SQL. Python handles ingestion and FHIR export only. The system is not validated for clinical use and must not be applied to real patients.
+Built as a proof-of-concept using Synthea EHR data, the system simulates the technical, clinical safety, and governance considerations that would be required before any NHS deployment — guideline-traceable scoring rules, explicit data insufficiency flagging, FHIR R4 interoperability, DCB0129-aware architecture, and a fully deterministic reproducible pipeline. Clinical reasoning lives entirely in SQL. Python handles ingestion and FHIR export only. The system is not validated for clinical use and must not be applied to real patients.
 
 ---
 
@@ -94,6 +110,7 @@ Two parallel layers:
 - **Band assignment** — four-band escalation signal integrating severity, BMI floor, temporal signals, and clinical caps
 
 A single continuous risk score was intentionally avoided to preserve interpretability and prevent compensatory averaging between physiological domains — consistent with the non-compensatory aggregation principle applied throughout (D-51, CPL-006).
+> **FHIR note:** Validation is against base FHIR R4.0.1 only. MedicationRequest resources use RxNorm because Synthea generates no dm+d codes natively. Medication coding has no upstream impact on scoring. NHS deployment would require dm+d mapping and UK Core profiling — documented in CPL-011.
 
 ### Pipeline Funnel
 
@@ -137,19 +154,39 @@ A proposed NHS deployment architecture including data flow, integration prerequi
 
 Four internal consistency and retrospective exploratory analyses applied. Full results and methodology in `docs/clinical_safety_and_validation.md`.
 
-| Component | Result |
-|---|---|
-| Unit tests | 29 / 29 PASS |
-| Drift detection | NO_DRIFT_DETECTED |
-| FHIR structural errors | 0 |
-| Tier convergence (V2) | All 7 WORSENING+UNSTABLE patients in Band 4 |
-| Retrospective encounter enrichment (V1) | Inverse result — synthetic data limitation, documented explicitly |
+### Validation Scope
 
-Pipeline is fully deterministic. All scoring constants stored in `scoring_constants` — no parameters hardcoded in SQL. Golden set locked at BANDS_V6 / PS_V4 / TEMPORAL_V3.
+**Completed**
+- SQL logic unit tests (29/29 PASS)
+- Deterministic drift detection against golden set
+- FHIR R4 structural validation (zero errors, HL7 Validator v6.9.4)
+- Internal consistency checks across scoring layers
+- Retrospective exploratory analysis on synthetic encounter data
+
+**Not performed**
+- External validation on real patient data
+- Clinical outcome validation
+- Sensitivity and specificity assessment
+- Predictive calibration
+- UK Core FHIR conformance testing
 
 ---
 
-## 6. Repository Structure
+## 6. Reproduce the Pipeline
+
+The pipeline is fully deterministic. Running the scripts and SQL files in order against the source Synthea CSVs will reproduce all outputs exactly.
+
+1. Create a SQLite database and load Synthea CSVs using `scripts/load_data.py`
+2. Load SNOMED CT terminology map using `scripts/load_snomed_map.py`
+3. Run SQL files in `/sql` in this order: `clean_data.sql` → `load_reference.sql` → `prepare_cohort.sql` → `score_patients.sql` → `logic_unit_tests.sql` → `create_golden_set.sql` → `drift_detector.sql`
+4. Export FHIR R4 bundles using `scripts/fhir_export_final_v2.py`
+5. Compare outputs against `/exports` — all scoring outputs are pre-exported for reference
+
+Full execution detail and locked pipeline versions in `docs/clinical_safety_and_validation.md`.
+
+---
+
+## 7. Repository Structure
 
 ```
 cardiometabolic-deterioration/
@@ -213,7 +250,7 @@ cardiometabolic-deterioration/
 ```
 ---
 
-## 7. Further Documentation
+## 8. Further Documentation
 
 - **[Clinical Safety and Validation Report](docs/clinical_safety_and_validation.md)** — full scoring architecture, threshold tables, temporal logic, CPL, governance deep dive, validation results, known limitations
 - **[Patient Explorer](https://asadqureshi12.github.io/cardiometabolic-deterioration/explorer/)** — search by patient ID, view band, priority string, marker scores, monthly exceedance chart
@@ -230,7 +267,7 @@ cardiometabolic-deterioration/
 
 ---
 
-## 8. Disclaimer
+## 9. Disclaimer
 
 Synthea-generated synthetic EHR data only. No real NHS patient data was used or accessed at any stage. All identifiers are synthetic UUIDs. No machine learning, probabilistic modelling, or predictive calibration was performed. This system has not been validated for clinical use and has not been assessed under DCB0129. It must not be used for clinical decisions about real patients.
 
