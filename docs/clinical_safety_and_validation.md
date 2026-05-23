@@ -270,6 +270,19 @@ RCPath analytical CV of 2–3% for HbA1c at the 53 mmol/mol threshold translates
 
 **Limitation:** The threshold is applied uniformly across all three temporal markers (SBP, HbA1c, LDL). A marker-specific threshold calibrated to individual analytical CV values would be more precise — identified as future scope.
 
+**Variance Threshold Sensitivity Analysis:**
+
+| Threshold | UNSTABLE patients | WORSENING+UNSTABLE patients | Comment |
+|---|---:|---:|---|
+| 0.0005 | 45 | 8 | More sensitive — captures additional low-level variance near the estimated noise floor |
+| **0.001** | **41** | **7** | **Selected threshold — sits above the RCPath-corroborated analytical noise floor estimate** |
+| 0.002 | 37 | 7 | More specific — no change to the highest-priority synthetic group |
+| 0.005 | 33 | 6 | Conservative — may mask earlier instability signals |
+
+The selected threshold of `0.001` produces stable WORSENING+UNSTABLE output across the `0.001–0.002` range, suggesting that the highest-priority tier is not highly sensitive to small threshold changes. Moving from `0.0005` to `0.001` removes one additional WORSENING+UNSTABLE patient, representing a marginal sensitivity loss in exchange for reducing low-level noise-floor variance. Moving to `0.005` reduces the highest-priority group from 7 to 6 patients, suggesting that overly conservative thresholds may suppress early instability signals.
+
+Overall, `0.001` is a defensible threshold for this synthetic proof of concept: it sits above the estimated analytical noise floor while preserving the core WORSENING+UNSTABLE patient group.
+
 ---
 
 ### CPL-006
