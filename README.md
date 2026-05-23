@@ -11,14 +11,6 @@
 
 ---
 
-## Executive Summary
-
-Cardiometabolic disease — Type 2 diabetes, hypertension, cardiovascular disease, and chronic kidney disease — represents the highest burden of avoidable hospitalisation in NHS secondary care. Clinical monitoring remains largely episodic and reactive. This system demonstrates a proactive, rule-based deterioration monitoring architecture that aggregates longitudinal biomarker signals across a 631-patient QOF-derived chronic disease cohort, producing two parallel outputs: a deterministic clinician-facing priority string and a four-band escalation signal. All clinical thresholds are anchored to NICE, KDIGO, and RCPath guidance. No machine learning, probabilistic modelling, or invented parameters are used at any stage.
-
-Built as a synthetic proof-of-concept using Synthea EHR data, the system is designed with NHS operational deployment in mind — guideline-traceable scoring rules, explicit data insufficiency flagging, FHIR R4 interoperability, DCB0129-aware architecture, and a fully deterministic reproducible pipeline. Clinical reasoning lives entirely in SQL. Python handles ingestion and FHIR export only. The system is not validated for clinical use and must not be applied to real patients.
-
----
-
 ## TL;DR
 
 - Rule-based cardiometabolic deterioration monitoring system built in SQL with Python and FHIR export
@@ -30,6 +22,14 @@ Built as a synthetic proof-of-concept using Synthea EHR data, the system is desi
 - Four internal consistency and retrospective exploratory analyses
 - No machine learning, probabilistic modelling, or predictive calibration
 - All clinical reasoning in SQL — Python used for ingestion and FHIR export only
+
+---
+
+## Executive Summary
+
+Cardiometabolic disease — Type 2 diabetes, hypertension, cardiovascular disease, and chronic kidney disease — represents the highest burden of avoidable hospitalisation in NHS secondary care. Clinical monitoring remains largely episodic and reactive. This system demonstrates a proactive, rule-based deterioration monitoring architecture that aggregates longitudinal biomarker signals across a 631-patient QOF-derived chronic disease cohort, producing two parallel outputs: a deterministic clinician-facing priority string and a four-band escalation signal. All clinical thresholds are anchored to NICE, KDIGO, and RCPath guidance.
+
+Built as a synthetic proof-of-concept using Synthea EHR data, the system is designed with NHS operational deployment in mind — guideline-traceable scoring rules, explicit data insufficiency flagging, FHIR R4 interoperability, DCB0129-aware architecture, and a fully deterministic reproducible pipeline. Clinical reasoning lives entirely in SQL. Python handles ingestion and FHIR export only. The system is not validated for clinical use and must not be applied to real patients.
 
 ---
 
