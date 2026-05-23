@@ -17,7 +17,7 @@
 - 631-patient QOF-derived chronic disease cohort constructed from Synthea 1,113-patient EHR
 - Two parallel output layers: deterministic clinician-facing priority string and holistic band assignment
 - 4-layer scoring architecture: threshold exceedance → BMI floor → temporal signals → clinical caps
-- Flags patients with concurrent deterioration trajectory and instability across biomarker domains
+- Demonstrates logic for surfacing synthetic patients with concurrent deterioration trajectory and instability across biomarker domains
 - FHIR R4 export — 39,070 resources, zero structural errors, HL7 Validator v6.9.4 (base R4 only — not UK Core conformant; MedicationRequest uses RxNorm as Synthea emits no dm+d codes; medications not used in scoring)
 - Four internal consistency and retrospective exploratory analyses
 - No machine learning, probabilistic modelling, or predictive calibration
@@ -81,7 +81,7 @@ Built as a proof-of-concept using Synthea EHR data, the system simulates the tec
 
 Chronic cardiometabolic deterioration rarely presents as a single catastrophic event. In routine NHS care, deterioration is often distributed across multiple biomarker domains over months or years — rising HbA1c, worsening systolic blood pressure, declining renal function, or persistent LDL elevation. These changes are typically reviewed independently during episodic disease-specific encounters rather than aggregated into a longitudinal deterioration signal.
 
-This project explores whether guideline-defined biomarker exceedance, temporal trajectory, and instability signals can be combined into a transparent rule-based prioritisation architecture for longitudinal surveillance of chronic disease cohorts. All thresholds and escalation criteria are derived from NICE, KDIGO, RCPath, and QOF guidance. No thresholds were invented or calibrated to the dataset.
+This project explores whether guideline-defined biomarker exceedance, temporal trajectory, and instability signals can be combined into a transparent rule-based prioritisation architecture for longitudinal surveillance of chronic disease cohorts. Clinical thresholds are derived from NICE, KDIGO, RCPath, and QOF guidance. One system parameter — the variance instability threshold — is empirically derived and documented in CPL-005.
 
 ---
 
