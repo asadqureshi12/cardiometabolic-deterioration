@@ -256,6 +256,7 @@ cardiometabolic-deterioration/
 
 - **[Clinical Safety and Validation Report](docs/clinical_safety_and_validation.md)** — full scoring architecture, threshold tables, temporal logic, CPL, governance deep dive, validation results, and known limitations
 - **[Information Governance Summary](docs/ig_section.md)** — condensed Caldicott, DCB0129, and DPIA considerations for non-technical reviewers
+- **[Project Reference Table](docs/project_reference_table.md)** — exported versioned design table containing locked scoring parameters, threshold rules, temporal settings, and governance decisions
 - **[Patient Explorer](https://asadqureshi12.github.io/cardiometabolic-deterioration/explorer/)** — search by patient ID, view band, priority string, marker scores, monthly exceedance chart
 - **[Dashboard 1 — Population Overview](https://public.tableau.com/app/profile/33e422.prorton/viz/Cardiometabolic_Deterioration_Monitoring/Dashboard1)**
 - **[Dashboard 2 — Temporal Signals](https://public.tableau.com/app/profile/33e422.prorton/viz/Cardiometabolic_Deterioration_Monitoring/Dashboard2)**
