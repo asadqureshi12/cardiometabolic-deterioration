@@ -110,7 +110,6 @@ Two parallel layers:
 - **Band assignment** — four-band escalation signal integrating severity, BMI floor, temporal signals, and clinical caps
 
 A single continuous risk score was intentionally avoided to preserve interpretability and prevent compensatory averaging between physiological domains — consistent with the non-compensatory aggregation principle applied throughout (D-51, CPL-006).
-> **FHIR note:** Validation is against base FHIR R4.0.1 only. MedicationRequest resources use RxNorm because Synthea generates no dm+d codes natively. Medication coding has no upstream impact on scoring. NHS deployment would require dm+d mapping and UK Core profiling — documented in CPL-011.
 
 ### Pipeline Funnel
 
@@ -169,6 +168,8 @@ Four internal consistency and retrospective exploratory analyses applied. Full r
 - Sensitivity and specificity assessment
 - Predictive calibration
 - UK Core FHIR conformance testing
+
+> **FHIR note:** Validation is against base FHIR R4.0.1 only. MedicationRequest resources use RxNorm because Synthea generates no dm+d codes natively. Medication coding has no upstream impact on scoring. NHS deployment would require dm+d mapping, UK Core profiling, and revalidation with UK jurisdiction settings and the fhir.r4.uk-core IG loaded — documented in CPL-011.
 
 ---
 
