@@ -1,6 +1,6 @@
 Information Governance
 
-The system was designed with governance in mind from the start — every threshold is traceable to a named NICE or KDIGO guideline, every design decision is documented in the project reference table, and data quality is surfaced as a first-class output rather than hidden.
+The system was designed with governance in mind from the start — every threshold is traceable to a named NICE or KDIGO guideline, every design decision is documented in the sprint log and clinical problem log, and data quality is surfaced as a first-class output rather than hidden.
 
 This project uses synthetic data only (Synthea). No real patient data was processed. The following reflects considerations for NHS deployment with real clinical data.
 
