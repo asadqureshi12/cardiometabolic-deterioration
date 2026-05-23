@@ -27,7 +27,7 @@
 
 ## Executive Summary
 
-Cardiometabolic disease — Type 2 diabetes, hypertension, cardiovascular disease, and chronic kidney disease — represents the highest burden of avoidable hospitalisation in NHS secondary care. Clinical monitoring remains largely episodic and reactive. This system demonstrates a proactive, rule-based deterioration monitoring architecture that aggregates longitudinal biomarker signals across a 631-patient QOF-derived chronic disease cohort, producing two parallel outputs: a deterministic clinician-facing priority string and a four-band escalation signal. All clinical thresholds are anchored to NICE, KDIGO, and RCPath guidance.
+This system demonstrates a proactive, rule-based cardiometabolic deterioration monitoring architecture built on a 631-patient QOF-derived chronic disease cohort, producing two parallel outputs: a deterministic clinician-facing priority string and a four-band escalation signal.
 
 Built as a synthetic proof-of-concept using Synthea EHR data, the system is designed with NHS operational deployment in mind — guideline-traceable scoring rules, explicit data insufficiency flagging, FHIR R4 interoperability, DCB0129-aware architecture, and a fully deterministic reproducible pipeline. Clinical reasoning lives entirely in SQL. Python handles ingestion and FHIR export only. The system is not validated for clinical use and must not be applied to real patients.
 
@@ -63,9 +63,9 @@ Built as a synthetic proof-of-concept using Synthea EHR data, the system is desi
 
 ## 1. Clinical Problem
 
-Cardiometabolic disease — encompassing Type 2 diabetes, cardiovascular disease, hypertension, and chronic kidney disease — represents the highest burden of morbidity and hospitalisation in NHS secondary care. Deterioration in this population is characterised by gradual, simultaneous biomarker trajectory changes across multiple physiological domains. Standard clinical monitoring is episodic and reactive. This system demonstrates a proactive, longitudinal monitoring architecture that aggregates biomarker signals into a structured deterioration prioritisation output using a one-year observation window.
+Chronic cardiometabolic deterioration rarely presents as a single catastrophic event. In routine NHS care, deterioration is often distributed across multiple biomarker domains over months or years — rising HbA1c, worsening systolic blood pressure, declining renal function, or persistent LDL elevation. These changes are typically reviewed independently during episodic disease-specific encounters rather than aggregated into a longitudinal deterioration signal.
 
-All clinical thresholds and escalation criteria are derived from NICE, KDIGO, RCPath, and QOF guidance. No thresholds were invented or calibrated to the dataset.
+This project explores whether guideline-defined biomarker exceedance, temporal trajectory, and instability signals can be combined into a transparent rule-based prioritisation architecture for longitudinal surveillance of chronic disease cohorts. All thresholds and escalation criteria are derived from NICE, KDIGO, RCPath, and QOF guidance. No thresholds were invented or calibrated to the dataset.
 
 ---
 
