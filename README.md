@@ -1,7 +1,6 @@
 # Cardiometabolic Deterioration Monitoring System
 
-![FHIR Validation](https://img.shields.io/badge/FHIR_R4-Validated-green?style=flat&logo=hl7&logoColor=white)
-![Validator](https://img.shields.io/badge/HL7_Validator-v6.9.4-blue?style=flat)
+![FHIR Validation](https://img.shields.io/badge/FHIR_R4-Base_Structural_Check-green?style=flat&logo=hl7&logoColor=white)![Validator](https://img.shields.io/badge/HL7_Validator-v6.9.4-blue?style=flat)
 ![Structural Errors](https://img.shields.io/badge/Structural_Errors-0-brightgreen?style=flat)
 ![Resources](https://img.shields.io/badge/Resources-39%2C070-informational?style=flat)
 ![SQL](https://img.shields.io/badge/Primary_Language-SQL-orange?style=flat&logo=sqlite&logoColor=white)
