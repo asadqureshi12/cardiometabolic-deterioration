@@ -1,6 +1,7 @@
 # Cardiometabolic Deterioration Monitoring System
 
-![FHIR Validation](https://img.shields.io/badge/FHIR_R4-Base_Structural_Check-green?style=flat&logo=hl7&logoColor=white)![Validator](https://img.shields.io/badge/HL7_Validator-v6.9.4-blue?style=flat)
+![FHIR Validation](https://img.shields.io/badge/FHIR_R4-Base_Structural_Check-green?style=flat&logo=hl7&logoColor=white)
+![Validator](https://img.shields.io/badge/HL7_Validator-v6.9.4-blue?style=flat)
 ![Structural Errors](https://img.shields.io/badge/Structural_Errors-0-brightgreen?style=flat)
 ![Resources](https://img.shields.io/badge/Resources-39%2C070-informational?style=flat)
 ![SQL](https://img.shields.io/badge/Primary_Language-SQL-orange?style=flat&logo=sqlite&logoColor=white)
@@ -14,10 +15,11 @@
 
 - Rule-based cardiometabolic deterioration monitoring system built in SQL with Python and FHIR export
 - 631-patient QOF-derived chronic disease cohort constructed from Synthea 1,113-patient EHR
-- Two parallel output layers: deterministic clinician-facing priority string and holistic band assignment
+- Two parallel output layers: deterministic clinical-review priority string and four-band escalation signal
 - 4-layer scoring architecture: threshold exceedance → BMI floor → temporal signals → clinical caps
 - Demonstrates logic for surfacing synthetic patients with concurrent deterioration trajectory and instability across biomarker domains
-- FHIR R4 export — 39,070 resources, zero structural errors, HL7 Validator v6.9.4 (base R4 only — not UK Core conformant; MedicationRequest uses RxNorm as Synthea emits no dm+d codes; medications not used in scoring)
+- FHIR R4 export — 39,070 resources, zero structural errors, HL7 Validator v6.9.4
+- Base FHIR R4 only — not UK Core conformant; MedicationRequest uses RxNorm because Synthea emits no dm+d codes; medications are not used in scoring
 - Four internal consistency and retrospective exploratory analyses
 - No machine learning, probabilistic modelling, or predictive calibration
 - All clinical reasoning in SQL — Python used for ingestion and FHIR export only
@@ -29,7 +31,7 @@
 This project was built to demonstrate health informatics capability across:
 
 - Clinical guideline translation into deterministic SQL scoring rules
-- Longitudinal patient cohort construction using NHS terminology standards
+- Longitudinal patient cohort construction using NHS-relevant clinical terminology mappings
 - SNOMED CT, ICD-10, LOINC, and FHIR R4 handling
 - Data quality frameworks, unit testing, and reproducible pipeline design
 - Drift detection and golden set validation infrastructure
@@ -129,14 +131,14 @@ The system was designed with NHS operational deployment prerequisites in mind. F
 - **Caldicott Principles** — Only five scoring biomarkers processed. No social, behavioural, or unnecessary demographic data. Minimum necessary access principle applied throughout.
 - **DCB0129** — Would apply to any real deployment. Non-compensatory aggregation, explicit DATA_INSUFFICIENT flagging, and two-layer output architecture were each designed with DCB0129 auditability in mind. Four design-stage hazards identified and controlled. This proof-of-concept has not been formally assessed under DCB0129.
 - **DPIA** — Required under UK GDPR Article 35 before real deployment. Not required for this synthetic data project. Legal basis, data minimisation, access controls, and patient notification obligations scoped in clinical safety document.
-- **Data insufficiency** — Patients with insufficient longitudinal data are explicitly flagged as DATA_INSUFFICIENT. The clinician sees the data gap, not an absence of risk.
+- **Data insufficiency** — Patients with insufficient longitudinal data are explicitly flagged as DATA_INSUFFICIENT. The review interface exposes the data gap rather than treating missing longitudinal data as absence of risk.
 - **Synthetic data only** — No real NHS patient data was used or accessed at any stage.
 
 ---
 
 ## 4. Operational Considerations
 
-**Observation density.** 74.5% of scored patients did not meet temporal threshold. EMIS and SystmOne chronic disease review pathways would produce substantially higher coverage. Observation density is the primary operational constraint — not the scoring architecture.
+**Observation density.** 74.5% of scored patients did not meet temporal threshold. Real-world EMIS and SystmOne chronic disease review pathways may produce higher coverage, but this would require local data profiling before deployment. Observation density is the primary operational constraint — not the scoring architecture.
 
 **EHR integration.** The SQL scoring architecture is EHR-agnostic. The integration layer would need to map local encounter classification, SNOMED coding, and LOINC observation codes to pipeline expectations.
 
