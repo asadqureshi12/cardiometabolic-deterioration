@@ -172,7 +172,10 @@ cardiometabolic-deterioration/
 │   └── output_part3.json
 ├── /screenshots
 ├── /explorer
-│   └── index.html
+│   ├── index.html
+│   ├── app.js
+│   ├── styles.css
+│   └── /data
 └── /docs
 ├── sprint1_log.md
 ├── project_reference.md
