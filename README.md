@@ -198,7 +198,7 @@ cardiometabolic-deterioration/
 ├── /docs
 │   ├── sprint1_log.md
 │   ├── ig_section.md
-│   └── clinical_safety_and_validation.md
+│   ├── clinical_safety_and_validation.md
 │   └── project_reference.md
 ├── /explorer
 │   ├── index.html
