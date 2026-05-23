@@ -153,33 +153,63 @@ Pipeline is fully deterministic. All scoring constants stored in `scoring_consta
 
 ```
 cardiometabolic-deterioration/
-├── /sql
-│   ├── clean_data.sql
-│   ├── load_reference.sql
-│   ├── prepare_cohort.sql
-│   ├── score_patients.sql
-│   ├── validate_outputs.sql
-│   ├── logic_unit_tests.sql
-│   ├── create_golden_set.sql
-│   └── drift_detector.sql
-├── /python
-│   ├── load_data.py
-│   ├── load_snomed_map.py
-│   └── fhir_export_final_v2.py
-├── /fhir
-│   ├── output_part1.json
-│   ├── output_part2.json
-│   └── output_part3.json
-├── /screenshots
+├── .github/
+│   └── /workflows
+│       └── fhir-validation.yml
+├── /docs
+│   ├── sprint1_log.md
+│   ├── ig_section.md
+│   └── clinical_safety_and_validation.md
 ├── /explorer
 │   ├── index.html
 │   ├── app.js
 │   ├── styles.css
 │   └── /data
-└── /docs
-├── sprint1_log.md
-├── project_reference.md
-└── clinical_safety_and_validation.md
+│       ├── marker_data_quality_export.csv
+│       ├── monthly_scores_export.csv
+│       ├── patients_grid.csv
+│       └── scoring_string_export.csv
+├── /exports
+│   ├── band_migration_export.csv
+│   ├── bmi_correction_export.csv
+│   ├── cohort_funnel.csv
+│   ├── marker_data_quality_export.csv
+│   ├── monthly_scores_export.csv
+│   ├── patients_grid.csv
+│   ├── scoring_string_export.csv
+│   └── validation_summary.csv
+├── /fhir
+│   ├── fhir_bundle_part1.json
+│   ├── fhir_bundle_part2.json
+│   ├── fhir_bundle_part3.json
+│   ├── fhir_report_part1.txt
+│   ├── fhir_report_part2.txt
+│   └── fhir_report_part3.txt
+├── /screenshots
+│   ├── deployment_architecture.png
+│   ├── explorer-demo.gif
+│   ├── Dashboard1.png
+│   ├── Dashboard2.png
+│   └── [excalidraw diagrams]
+├── /scripts
+│   ├── load_data.py
+│   ├── load_snomed_map.py
+│   ├── fhir_export_final_v2.py
+│   └── fhir_pilot.py
+├── /sql
+│   ├── schema.sql
+│   ├── clean_data.sql
+│   ├── load_reference.sql
+│   ├── prepare_cohort.sql
+│   ├── score_patients.sql
+│   ├── create_golden_set.sql
+│   ├── logic_unit_tests.sql
+│   ├── drift_detector.sql
+│   ├── retrospective_validation.sql
+│   └── validation_summary.sql
+├── /tableau
+│   └── Cardiometabolic_Deterioration_Monitoring.twbx
+└── README.md
 ```
 ---
 
