@@ -150,6 +150,8 @@ Pipeline is fully deterministic. All scoring constants stored in `scoring_consta
 ---
 
 ## 6. Repository Structure
+
+```
 cardiometabolic-deterioration/
 ├── /sql
 │   ├── clean_data.sql
@@ -175,7 +177,7 @@ cardiometabolic-deterioration/
 ├── sprint1_log.md
 ├── project_reference.md
 └── clinical_safety_and_validation.md
-
+```
 ---
 
 ## 7. Further Documentation
