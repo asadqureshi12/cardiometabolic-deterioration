@@ -1,7 +1,7 @@
 # Project Reference Table
 ## Cardiometabolic Deterioration Monitoring System — P3
 
-This document exports the `project_reference` database table in full. Every locked design decision, scoring parameter, clinical threshold, and governance rule is stored here as a versioned, queryable record. Each row references a D-series decision from `docs/sprint1_log.md`. No scoring parameters are hardcoded in SQL — all values are derived from this table at runtime.
+This document exports the `project_reference` database table in full. Every locked design decision, scoring parameter, clinical threshold, and governance rule is stored here as a versioned, queryable record. Each row references a D-series decision from `docs/sprint1_log.md`. Core scoring thresholds, windows, tier definitions, and governance parameters are stored in this table and referenced by the scoring pipeline rather than embedded as undocumented SQL constants.
 
 Source: `project_reference` table, `p3_deterioration_full.db`  
 Pipeline version: BANDS_V6 / PS_V4 / TEMPORAL_V3 — NO_DRIFT_DETECTED
@@ -61,14 +61,14 @@ Pipeline version: BANDS_V6 / PS_V4 / TEMPORAL_V3 — NO_DRIFT_DETECTED
 
 | Ref | Item | Value | Source | Decision | Notes |
 |---|---|---|---|---|---|
-| 33 | Variance instability threshold | 0.001 | Empirical distribution analysis of Synthea-derived monthly I-score variance | D-62 | Separates noise floor (~0–0.0005) from stable physiological drift (~0.002–0.003) and higher instability (≥0.01) |
+| 33 | Variance instability threshold | 0.001 | Empirical distribution analysis of Synthea-derived monthly I-score variance | D-62 | Separates synthetic-data noise floor (~0–0.0005) from stable physiological drift (~0.002–0.003) and higher instability (≥0.01). Sensitivity analysis documented; not externally validated. |
 | 34 | Breach detection data tier gate | mean_i > 0 across all data tiers | Internal design decision | D-63 | Data tier gates trajectory and variance only. A single reading exceeding NICE threshold = breach regardless of data density. |
 | 36 | Marker tier definitions — absolute | SBP: 0=<140, 1=140–159, 2=160–179, 3=≥180; HbA1c: 0=<7.0, 1=7.0–8.5, 2=8.5–10.0, 3=>10.0; BMI: 0=<25.0, 1=25.0–29.9, 2=30.0–34.9, 3=≥35.0 | NICE NG136, NG28, CG189 | D-66 | At-threshold values assigned to higher tier (D-69). Band 2 dominance reflects Synthea treatment simulation. |
 | 37 | Marker tier definitions — LDL | 0=mean_i=0 or NULL; 1=mean_i 0–0.25; 2=mean_i 0.25–0.50; 3=mean_i>0.50 | NICE NG238 (threshold anchor); deviation tiers = internal design decision | D-67 | No published severity tiers above NG238 target. Deviation tiers are a design choice. |
 | 39 | Tier boundary rule | At-threshold values → higher tier for absolute markers | NICE NG28 clinical interpretation | D-69 | HbA1c 7.0% → Tier 1. SBP 140 → Tier 1. LDL unaffected — uses mean_i which is 0 at threshold. |
-| 40 | RECENT CVD band floor | RECENT CVD → final_band = MAX(capped_band, 2) | ESC 2021 Cardiovascular Prevention Guidelines | D-70 | All 4 RECENT patients correctly assigned Band 4 in this cohort |
+| 40 | RECENT CVD band floor | RECENT CVD → final_band = MAX(capped_band, 2) | ESC 2021 Cardiovascular Prevention Guidelines | D-70 | RECENT CVD creates a minimum Band 2 floor. In this cohort, all 4 RECENT CVD patients were assigned Band 4 due to additional severity/temporal criteria. |
 | 45 | eGFR tier definition | Tier 0: ≥60; Tier 1: 45–59; Tier 2: 30–44; Tier 3: <30 | KDIGO 2012, NICE NG203 | D-75 | Compressed from KDIGO 5-stage to 0–3 ordinal. KDIGO Stage 1 vs 2 distinction lost in compression — documented limitation. |
-| 49 | BMI band dominance | BMI drives band for 110/479 scored patients (23.0%) after BMI floor rule applied (D-79) | Empirical analysis of patient_bands; NICE CG189 | D-77 | Pre-floor rule dominance was 89.9% (427/475). BMI floor rule reduced dominance by removing BMI from direct tier competition. Remaining 23.0% reflects patients where BMI floor exceeds dynamic base band. NHS data would further reduce BMI dominance. |
+| 49 | BMI band dominance | BMI drives band for 110/479 scored patients (23.0%) after BMI floor rule applied (D-79) | Empirical analysis of patient_bands; NICE CG189 | D-77 | Pre-floor rule dominance was 89.9% (427/475). BMI floor rule reduced dominance by removing BMI from direct tier competition. Remaining 23.0% reflects patients where BMI floor exceeds dynamic base band. |
 | 51 | BMI band floor rule | Tier 2 → floor 2; Tier 3 → floor 3; Tier 0/1 → floor 1 | NICE CG189 | D-79 | BMI contributes static risk floor, not dynamic tier competition. Prevents BMI from dominating band assignment. |
 
 ---
