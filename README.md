@@ -89,7 +89,7 @@ This project explores whether guideline-defined biomarker exceedance, temporal t
 ## 2. What the System Does
 
 <p align="center">
-  <img src="screenshots/Untitled-2026-05-07-1511.excalidraw.png" style="max-width:100%;">
+  <img src="screenshots/pipeline_architecture.png" style="max-width:100%;">
 </p>
 
 ### Cohort
@@ -98,6 +98,10 @@ This project explores whether guideline-defined biomarker exceedance, temporal t
 
 ### Scoring
 
+<p align="center">
+  <img src="screenshots/scoring_layers.png" style="max-width:100%;">
+</p>
+
 Five biomarkers scored against NICE and KDIGO thresholds: SBP (NG136), HbA1c (NG28), LDL (NG238), BMI (CG189), eGFR (KDIGO 2012). Exceedance intensity formula: `I = MAX(0, (x - T) / T)`. All parameters stored in reference tables — no hardcoded values in SQL.
 
 ### Temporal Signals
@@ -105,6 +109,10 @@ Five biomarkers scored against NICE and KDIGO thresholds: SBP (NG136), HbA1c (NG
 Applied to SBP, HbA1c, and LDL across a fixed 52-week observation window. Non-compensatory aggregation: any marker WORSENING → system WORSENING; any marker UNSTABLE → system UNSTABLE. 118 patients met minimum observation density threshold.
 
 ### Outputs
+
+<p align="center">
+  <img src="screenshots/priority_string.png" style="max-width:100%;">
+</p>
 
 Two parallel layers:
 - **Priority string** — four-field deterministic clinician-facing summary: `CVD_STATUS | MARKERS_BREACHING | WORST_MARKER | CONDITION_COUNT`
