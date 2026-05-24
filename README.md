@@ -102,7 +102,7 @@ This project explores whether guideline-defined biomarker exceedance, temporal t
   <img src="screenshots/scoring_layers.png" style="max-width:100%;">
 </p>
 
-Five biomarkers scored against NICE and KDIGO thresholds: SBP (NG136), HbA1c (NG28), LDL (NG238), BMI (CG189), eGFR (KDIGO 2012). Exceedance intensity formula: `I = MAX(0, (x - T) / T)`. All parameters stored in reference tables — no hardcoded values in SQL.
+Five biomarkers scored against NICE and KDIGO thresholds: SBP (NG136), HbA1c (NG28), LDL (NG238), BMI (CG189), eGFR (KDIGO 2012). Exceedance intensity formula: `I = MAX(0, (x - T) / T)`. Core parameters are stored in reference tables and documented in `docs/project_reference_table.md`.
 
 ### Temporal Signals
 
