@@ -276,6 +276,16 @@ cardiometabolic-deterioration/
 
 ---
 
+## Author Role and AI Assistance
+
+This project was led from a clinician-first perspective. My primary role was to define the clinical problem, translate cardiometabolic review logic into deterministic scoring rules, select and justify clinical thresholds, design the patient prioritisation outputs, and review safety, governance, and validation limitations.
+
+AI tools were used as coding and documentation assistants during parts of the build, including SQL drafting, Python support, README structuring, and wording refinement. All clinical assumptions, scoring decisions, threshold choices, validation framing, and final project outputs were reviewed and accepted by the author.
+
+The project demonstrates that clinical training and informatics tooling can be combined to produce auditable, guideline-traceable analytical systems. The system remains a synthetic proof of concept and is not clinically validated or suitable for real patient use.
+
+---
+
 ## 9. Disclaimer
 
 Synthea-generated synthetic EHR data only. No real NHS patient data was used or accessed at any stage. All identifiers are synthetic UUIDs. No machine learning, probabilistic modelling, or predictive calibration was performed. This system has not been validated for clinical use and has not been assessed under DCB0129. It must not be used for clinical decisions about real patients.
