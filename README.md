@@ -110,10 +110,6 @@ Applied to SBP, HbA1c, and LDL across a fixed 52-week observation window. Non-co
 
 ### Outputs
 
-<p align="center">
-  <img src="screenshots/priority_string.png" style="max-width:100%;">
-</p>
-
 Two parallel layers:
 - **Priority string** — four-field deterministic clinician-facing summary: `CVD_STATUS | MARKERS_BREACHING | WORST_MARKER | CONDITION_COUNT`
 - **Band assignment** — four-band escalation signal integrating severity, BMI floor, temporal signals, and clinical caps
