@@ -53,7 +53,7 @@ Pipeline version: BANDS_V6 / PS_V4 / TEMPORAL_V3 — NO_DRIFT_DETECTED
 | 15 | LDL biological variation threshold | 9% = 0.090 I units | RCPath clinical biochemistry | D-50 | Stability threshold for trajectory classification |
 | 16 | eGFR stage transition | Confirmed by 2 readings ≥90 days apart | KDIGO 2012, NICE NG203 | D-45 | Replaces continuous trajectory for eGFR |
 | 17 | Non-compensatory worst-case model | Any worsening marker = patient WORSENING. Any unstable marker = patient UNSTABLE. Improvement does not offset deterioration. | Clinical safety monitoring principle | D-51 | Applies to both trajectory and variance aggregation |
-| 32 | Trajectory for PARTIALLY_SUFFICIENT | Direction only: SIGN(last_month_i - first_month_i). WORSENING if >0, IMPROVING if <0, STABLE if =0. | Clinical governance decision | D-61 | Two months insufficient for full stability-threshold trajectory modelling. Direction-only classification is a conservative low-confidence signal and may overcall small changes; documented limitation. |
+| 32 | Trajectory for PARTIALLY_SUFFICIENT | Direction only: SIGN(last_month_i - first_month_i). WORSENING if >0, IMPROVING if <0, STABLE if =0. | Clinical governance decision | D-61 | Two months insufficient for full stability-threshold trajectory modelling. Direction-only classification is a conservative low-confidence signal; small changes may be labelled as worsening despite falling within expected measurement variation. |
 
 ---
 
