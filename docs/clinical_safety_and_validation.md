@@ -10,9 +10,17 @@ All clinical outputs, scoring versions, and validation results are as locked in 
 
 ### 0.1 Cohort Selection
 
+<p align="center">
+  <img src="../screenshots/pipeline_architecture.png" style="max-width:100%;">
+</p>
+
 The cohort is constructed using 46 SNOMED codes identified from NHS England QOF clinical disease register condition groups and confirmed present in the Synthea dataset, verified against the NHS England Primary Care Domain refset (release 20260212). 41 of 46 codes confirmed in the refset. 5 codes were not found under any alternative code or alias — see Section 4 known limitations. SNOMED codes were mapped to ICD-10 via NHS Digital TRUD ExtendedMap GB_20260311. Paediatric conditions (childhood asthma) and pre-diagnostic states (prediabetes) excluded. CKD without qualifying cardiometabolic comorbidity excluded — CPL-009. CVD status (ESTABLISHED / RECENT / NONE) assigned at cohort entry and determines LDL threshold throughout scoring.
 
 ### 0.2 CVD Status Assignment
+
+<p align="center">
+  <img src="../screenshots/cvd_status_assignment.png" style="max-width:100%;">
+</p>
 
 Three states: `RECENT` (STEMI or NSTEMI within 365 days — SNOMED 401303003 / 401314000 — Band floor 2 applied, LDL target 2.0 mmol/L / 77.3 mg/dL per NICE NG238 post-ACS), `ESTABLISHED` (any CVD history: IHD, HF, AF, valve disease, MI/CABG — LDL target 2.0 mmol/L / 77.3 mg/dL), `NONE` (no CVD history — LDL target 3.0 mmol/L / 116.0 mg/dL). LDL targets stated in mg/dL for display only — all scoring computations performed in mmol/L via deterministic conversion (mmol/L × 38.67).
 
@@ -27,6 +35,10 @@ Three states: `RECENT` (STEMI or NSTEMI within 365 days — SNOMED 401303003 / 4
 All sufficiency thresholds evaluated within the fixed 52-week observation window defined in scoring_constants (window_start → window_end).
 
 ### 0.4 Scoring Pipeline
+
+<p align="center">
+  <img src="../screenshots/scoring_layers.png" style="max-width:100%;">
+</p>
 
 | Marker | Guideline | Tier 0 | Tier 1 | Tier 2 | Tier 3 |
 |---|---|---|---|---|---|
@@ -55,6 +67,10 @@ Band assignment and temporal signal computation are generated through separate s
 
 ### 0.6 Priority String — Annotated Example
 
+<p align="center">
+  <img src="../screenshots/priority_string.png" style="max-width:100%;">
+</p>
+
 `ESTABLISHED | 3 | HbA1c:8.2/7.0 (+17.0%) | 4`
 
 | Field | Value | Meaning |
@@ -78,6 +94,10 @@ All 631 cohort patients exported as FHIR R4 bundles via `fhir_export_final_v2.py
 Validated against HL7 FHIR Validator v6.9.4, R4.0.1 — zero structural errors. Validation is against base FHIR R4.0.1 only — not UK Core conformant. See CPL-011.
 
 ### 0.8 Validation Results
+
+<p align="center">
+  <img src="../screenshots/validation_overview.png" style="max-width:100%;">
+</p>
 
 Four internal consistency and retrospective exploratory analyses applied. WORSENING+UNSTABLE group (n=7) does not reach n≥20 for statistical inference — not a performance benchmark (CPL-010).
 
