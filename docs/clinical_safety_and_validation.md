@@ -8,11 +8,11 @@ All clinical outputs, scoring versions, and validation results are as locked in 
 
 ## 0. System Architecture & Technical Reference
 
-### 0.1 Cohort Selection
-
 <p align="center">
   <img src="../screenshots/pipeline_architecture.png" style="max-width:100%;">
 </p>
+
+### 0.1 Cohort Selection
 
 The cohort is constructed using 46 SNOMED codes identified from NHS England QOF clinical disease register condition groups and confirmed present in the Synthea dataset, verified against the NHS England Primary Care Domain refset (release 20260212). 41 of 46 codes confirmed in the refset. 5 codes were not found under any alternative code or alias — see Section 4 known limitations. SNOMED codes were mapped to ICD-10 via NHS Digital TRUD ExtendedMap GB_20260311. Paediatric conditions (childhood asthma) and pre-diagnostic states (prediabetes) excluded. CKD without qualifying cardiometabolic comorbidity excluded — CPL-009. CVD status (ESTABLISHED / RECENT / NONE) assigned at cohort entry and determines LDL threshold throughout scoring.
 
