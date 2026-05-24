@@ -280,7 +280,7 @@ cardiometabolic-deterioration/
 
 This project was led from a clinician-first perspective. My primary role was to define the clinical problem, translate cardiometabolic review logic into deterministic scoring rules, select and justify clinical thresholds, design the patient prioritisation outputs, and review safety, governance, and validation limitations.
 
-AI tools were used as coding and documentation assistants during parts of the build, including SQL drafting, Python support, README structuring, and wording refinement. All clinical assumptions, scoring decisions, threshold choices, validation framing, and final project outputs were reviewed and accepted by the author.
+AI tools were used as a coding assistant for SQL and Python implementation. All clinical assumptions, scoring decisions, threshold choices, validation framing, and final project outputs were reviewed and accepted by the author.
 
 The project demonstrates that clinical training and informatics tooling can be combined to produce auditable, guideline-traceable analytical systems. The system remains a synthetic proof of concept and is not clinically validated or suitable for real patient use.
 
