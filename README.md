@@ -230,11 +230,15 @@ cardiometabolic-deterioration/
 │   ├── fhir_report_part2.txt
 │   └── fhir_report_part3.txt
 ├── /screenshots
+│   ├── pipeline_architecture.png
+│   ├── scoring_layers.png
+│   ├── priority_string.png
+│   ├── cvd_status_assignment.png
+│   ├── validation_overview.png
 │   ├── deployment_architecture.png
 │   ├── explorer-demo.gif
 │   ├── Dashboard1.png
-│   ├── Dashboard2.png
-│   └── [excalidraw diagrams]
+│   └── Dashboard2.png
 ├── /scripts
 │   ├── load_data.py
 │   ├── load_snomed_map.py
@@ -276,17 +280,9 @@ cardiometabolic-deterioration/
 
 ---
 
-## Author Role and AI Assistance
+## Authorship & Disclaimer
 
-This project was led from a clinician-first perspective. My primary role was to define the clinical problem, translate cardiometabolic review logic into deterministic scoring rules, select and justify clinical thresholds, design the patient prioritisation outputs, and review safety, governance, and validation limitations.
-
-AI tools were used as a coding assistant for SQL and Python implementation. All clinical assumptions, scoring decisions, threshold choices, validation framing, and final project outputs were reviewed and accepted by the author.
-
-The project demonstrates that clinical training and informatics tooling can be combined to produce auditable, guideline-traceable analytical systems. The system remains a synthetic proof of concept and is not clinically validated or suitable for real patient use.
-
----
-
-## 9. Disclaimer
+This project was led from a clinician-first perspective. Clinical problem definition, scoring logic, threshold selection, patient prioritisation design, governance framing, and validation decisions were made by the author. AI tools were used as a coding assistant for SQL and Python implementation.
 
 Synthea-generated synthetic EHR data only. No real NHS patient data was used or accessed at any stage. All identifiers are synthetic UUIDs. No machine learning, probabilistic modelling, or predictive calibration was performed. This system has not been validated for clinical use and has not been assessed under DCB0129. It must not be used for clinical decisions about real patients.
 
