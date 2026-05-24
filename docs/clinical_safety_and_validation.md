@@ -219,8 +219,6 @@ No DPIA is required for this project. All data is synthetic.
 
 ## 2. Clinical Problem Log — Full
 
-All entries as stored in `clinical_problem_log`. Summary table in README Section 18.
-
 ---
 
 ### CPL-001
