@@ -28,6 +28,7 @@ function init() {
             patientsData.length + ' patients loaded';
 
         setupSearch();
+        setupExampleButtons();
     }).catch(function(e) {
         document.getElementById('cohort-summary').textContent =
             'Error loading data: ' + e.message;
@@ -74,6 +75,18 @@ function setupSearch() {
         if (!e.target.closest('#search-section')) {
             suggestions.style.display = 'none';
         }
+    });
+}
+
+function setupExampleButtons() {
+    var buttons = document.querySelectorAll('.example-btn');
+    buttons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var id = this.getAttribute('data-id');
+            document.getElementById('patient-search').value = id;
+            document.getElementById('suggestions').style.display = 'none';
+            renderPatient(id);
+        });
     });
 }
 
