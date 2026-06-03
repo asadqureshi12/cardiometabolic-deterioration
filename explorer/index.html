@@ -7,33 +7,75 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <style>
+        #example-patients {
+            margin-bottom: 1rem;
+        }
+        #example-patients .example-label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        .example-btn {
+            display: inline-block;
+            margin: 0 0.4rem 0.4rem 0;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.78rem;
+            font-family: inherit;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            background: #f5f5f5;
+            color: #222;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .example-btn:hover {
+            background: #e0e0e0;
+            border-color: #888;
+        }
+        .example-btn.band-4-btn {
+            border-color: #c0392b;
+            color: #c0392b;
+            background: #fdf2f2;
+        }
+        .example-btn.band-4-btn:hover {
+            background: #f9d6d3;
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>P3 — Cardiometabolic Deterioration Monitoring System</h1>
         <p class="subtitle">Synthetic Cohort (n=479) · Rule-based scoring · NICE/KDIGO thresholds · Decision support only</p>
     </header>
-
     <section id="search-section">
+        <div id="example-patients">
+            <span class="example-label">Example patients</span>
+            <button class="example-btn band-4-btn" data-id="32a68223-9313-2a54-68bb-8acce5e1723f">Band 4 — WORSENING + UNSTABLE</button>
+            <button class="example-btn band-4-btn" data-id="429d2961-862d-1548-f2a2-34fde84b64a8">Band 4 — WORSENING + UNSTABLE (2nd)</button>
+            <button class="example-btn" data-id="01898358-14e2-4062-a67f-e4073d9ab8e4">Band 3 — Significant deterioration</button>
+            <button class="example-btn" data-id="011ece99-3ad6-fc23-4115-96a522453f71">Band 2 — Emerging concern</button>
+            <button class="example-btn" data-id="03036691-ae2a-40fe-663f-0a650f531f68">Band 1 — Stable / No signal</button>
+            <button class="example-btn" data-id="011ece99-3ad6-fc23-4115-96a522453f71">DATA_INSUFFICIENT example</button>
+        </div>
         <label for="patient-search">Search Patient ID</label>
         <input type="text" id="patient-search" placeholder="Type patient ID..." autocomplete="off">
         <div id="suggestions"></div>
         <p id="cohort-summary"></p>
     </section>
-
     <section id="patient-detail" class="hidden">
-
         <div id="summary-panel">
             <h2>Patient Summary</h2>
             <div id="summary-grid"></div>
         </div>
-
         <div id="string-panel">
             <h2>Clinical Priority String</h2>
             <div id="string-display"></div>
             <div id="string-fields"></div>
         </div>
-
         <div id="marker-panel">
             <h2>Marker Scores</h2>
             <p class="chart-subtitle">BMI and eGFR trajectory/variance do not contribute to system-level signals (D-76, D-79). Variance threshold: 0.001 (D-62) — above = UNSTABLE, at or below = STABLE.</p>
@@ -50,20 +92,16 @@
                 <tbody id="marker-tbody"></tbody>
             </table>
         </div>
-
         <div id="chart-panel">
             <h2>Monthly Exceedance</h2>
             <p class="chart-subtitle">SBP, HbA1c, LDL only — BMI and eGFR use separate scoring models</p>
             <p id="chart-note" class="hidden"></p>
             <canvas id="monthly-chart"></canvas>
         </div>
-
     </section>
-
     <footer>
         <p>Synthetic data only — Synthea 1,113-patient cohort. Not for clinical use. All values precomputed in SQL pipeline. This explorer renders outputs only — no client-side calculation.</p>
     </footer>
-
     <script src="app.js"></script>
 </body>
 </html>
